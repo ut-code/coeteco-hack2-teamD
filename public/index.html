@@ -19,10 +19,27 @@
             </li>
           </template>
     </ul>
-    <div id="cook-time">
+    <div id="cook-time-container">
       10分
-      <input type="range" min="0" max="100" value="0" step="10" id="cook-time-slider">
+      <input type="range" min="0" max="100" value="0" step="5" id="cook-time-slider">
       100分~
+      <div id="slider-value">50</div>
+    </div>
+    <div id="cook-difficulty">
+      <form>
+        <label>
+          <input type="radio" name="group" value="カンタン" checked>
+          Option 1
+        </label>
+        <label>
+          <input type="radio" name="group" value="難しくはない">
+          Option 2
+        </label>
+        <label>
+          <input type="radio" name="group" value="難易度は気にしない">
+          Option 3
+        </label>
+      </form>
     </div>
     <div id="selectButton"></div>
     <div>選択した食材</div>

@@ -88,6 +88,16 @@ document.addEventListener('click', function(event) {
   }
 });
 
+//cook-timeのsliderのデザインと値
+const cookTimeSlider = document.getElementById('cook-time-slider');
+const sliderValue = document.getElementById('slider-value');
+
+sliderValue.textContent = cookTimeSlider.value;
+
+cookTimeSlider.addEventListener('input', () => {
+    sliderValue.textContent = cookTimeSlider.value + '分';
+});
+
 submitButtonElement.onclick = async () => {
     const promptText = selectedIngredients.join("と") + "を用いた主菜を含む一食の献立を3つ提案してください";
     const aiMessageChunk = await postChat({ promptText });
