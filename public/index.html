@@ -20,9 +20,14 @@
           </template>
     </ul>
     <form id="input-form">
-        <input id="prompt-text-input" />
-        <button type="submit">送信</button>
-      </form>
+      <input id="prompt-text-input" />
+      <button type="submit">送信</button>
+    </form>
+    <div id="cook-time">
+      10分
+      <input type="range" min="0" max="100" value="0" step="10" id="cook-time-slider">
+      100分~
+    </div>
     <script src="/script.js"></script>
   </body>
 </html>
