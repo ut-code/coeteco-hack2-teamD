@@ -9,7 +9,7 @@ inputFormElement.onsubmit = async (event) => {
     // フォームが送信されたときのページ遷移を防ぐ
     event.preventDefault();
 
-    const promptText = promptTextInputElement.value.trim()+"を用いた主菜を含む一食の献立を3つ提案してください";
+    const promptText = promptTextInputElement.value.trim()+"を用いた主菜を含む一食の献立を3つ提案してください。ただし、献立はわかりやすく表に整理して要素ごとに改行して表示してください。";
     if (promptText === "") return;
     promptTextInputElement.value = "";
 

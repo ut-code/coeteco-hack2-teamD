@@ -2,7 +2,10 @@ import express from "express";
 import { ChatOpenAI } from "@langchain/openai";
 
 // LangChain の ChatOpenAI クラスは OPENAI_API_KEY 環境変数を自動的に参照する
-const chatModel = new ChatOpenAI();
+const chatModel = new ChatOpenAI({
+  model: "gpt-4o",
+  apiKey: process.env.OpenAIKey
+});
 
 const app = express();
 
