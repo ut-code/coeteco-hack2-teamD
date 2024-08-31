@@ -109,6 +109,27 @@ async function sendRecipeRequest(menu) {
   displayRecipeResponse(aiResponse.content);
 }
 
+// 食材認識の関数
+async function recognizeIngredients(imageElement) {
+  const model = await cocoSsd.load();
+  const predictions = await model.detect(imageElement);
+
+  const recognizedIngredients = predictions.map(prediction => prediction.class);
+  console.log("認識された食材:", recognizedIngredients);
+
+  return recognizedIngredients;
+}
+
+function addIngredientsToSyokuzai(ingredients) {
+  ingredients.forEach(ingredient => {
+    if (!syokuzai.includes(ingredient)) {
+      syokuzai.push(ingredient);
+    }
+  });
+  console.log("更新されたsyokuzai:", syokuzai);
+}
+
+
 // ボタン作成のコード（省略）
 
 const createButton = document.getElementById("selectButton");
