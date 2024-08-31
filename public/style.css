@@ -88,21 +88,25 @@ h1 {
 
 .slider-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
   margin: 10px 20px;
-  padding: 10px;
+  padding: 20px;
   background-color: #ecf0f1;
   border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #cook-time,
 #peopele-number {
-  margin-top: 20px;
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 .slider-container input[type="range"] {
-  margin: 0 10px;
-  flex-grow: 1;
+  margin: 10px 0px;
+  width: 100%;
 }
 
 #more-request {
@@ -274,4 +278,18 @@ h1 {
 
 .chat-message__delete-button:hover {
   background-color: #c0392b;
+}
+
+#cook-time-display, #people-number-display {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 10px;
+  color: red;
+}
+
+#time-people {
+  display: flex;
+  justify-content: center; /* Center the entire section horizontally */
+  gap: 40px; /* Add space between the cook time and people number sections */
+  margin: 20px 0; /* Add space above and below the section */
 }
