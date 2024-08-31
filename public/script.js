@@ -1,4 +1,7 @@
 const chatMessagesElement = document.getElementById("chat-messages");
+const menu1Element = document.getElementById("menu1");
+const menu2Element = document.getElementById("menu2");
+const menu3Element = document.getElementById("menu3");
 const chatMessageTemplateElement = document.getElementById(
   "chat-message-template"
 );
@@ -6,19 +9,14 @@ const submitButtonElement = document.getElementById("submit-button");
 
 // メッセージを画面に描画する
 function addChatMessageElement(author, chatMessage) {
-  // template 要素 (HTMLTemplateElement) は content プロパティを持ち、cloneNode メソッドで複製して利用できる
-  // 引数に true を渡すと子孫要素も複製される
   const fragment = chatMessageTemplateElement.content.cloneNode(true);
-  // querySelector メソッドを用いると呼ばれたクラス内の要素を CSS のセレクタの記法で検索できる
   const contentElement = fragment.querySelector(".chat-message__content");
   const rootElement = fragment.querySelector(".chat-message");
   const authorElement = fragment.querySelector(".chat-message__author");
   rootElement.classList.add(`chat-message--${author}`);
   const authorLabelMap = { you: "あなた", ai: "AI" };
   authorElement.textContent = authorLabelMap[author];
-  const deleteButtonElement = fragment.querySelector(
-    ".chat-message__delete-button"
-  );
+  const deleteButtonElement = fragment.querySelector(".chat-message__delete-button");
   contentElement.textContent = chatMessage.content;
   deleteButtonElement.onclick = () => {
     rootElement.remove();
@@ -26,15 +24,68 @@ function addChatMessageElement(author, chatMessage) {
   chatMessagesElement.appendChild(fragment);
 }
 
+// AIと対話する関数
 async function postChat(request) {
     const response = await fetch("/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request),
-    });
-    return await response.json();
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(request),
+  });
+  return await response.json();
+}
+
+// 変更された displayMenu 関数
+function displayMenu(menu1, menu2, menu3) {
+  menu1Element.innerHTML = formatMenu(menu1);
+  menu2Element.innerHTML = formatMenu(menu2);
+  menu3Element.innerHTML = formatMenu(menu3);
+
+  // クリックイベントの追加
+  menu1Element.onclick = () => sendRecipeRequest(menu1);
+  menu2Element.onclick = () => sendRecipeRequest(menu2);
+  menu3Element.onclick = () => sendRecipeRequest(menu3);
+}
+
+// 献立のテキストを改行形式でフォーマットする関数
+function formatMenu(menu) {
+  return menu.replace(/#/g, '<br/>#');
+}
+
+// レシピリクエストを送信する関数
+async function sendRecipeRequest(menu) {
+  const promptText = `${menu} この献立のレシピを送信してください。`;
+
+  const aiResponse = await postChat({ promptText });
+
+  // レスポンスをページ上の指定された場所に表示
+  displayRecipeResponse(aiResponse.content);
+}
+
+// レシピのレスポンスをHTMLで整形して表示する関数
+function displayRecipeResponse(response) {
+  const responseDisplayElement = document.getElementById('response-display');
+
+  // レスポンスを適切にHTMLフォーマットに変換
+  const formattedResponse = formatResponse(response);
+
+  responseDisplayElement.innerHTML = formattedResponse;
+}
+
+// レスポンスをHTMLフォーマットに変換する関数
+function formatResponse(response) {
+  // 改行を <br> タグに変換
+  let formatted = response.replace(/\n/g, '<br/>');
+
+  // リスト形式に変換 (例: "1. ..." -> "<ul><li>...</li></ul>")
+  formatted = formatted.replace(/(\d+)\.\s+/g, '<li>$&</li>');
+  formatted = '<ul>' + formatted + '</ul>';
+
+  // 必要に応じて追加のフォーマット処理を行う
+  // 例えば、段落ごとに <p> タグを追加するなど
+
+  return formatted;
 }
 
 
@@ -89,24 +140,26 @@ document.addEventListener('click', function(event) {
 });
 
 submitButtonElement.onclick = async () => {
-    const promptText = selectedIngredients.join("と") + "を用いた主菜を含む一食の献立を3つ提案してください";
-    const aiMessageChunk = await postChat({ promptText });
+    const promptText = selectedIngredients.join("と") + "を用いた主菜を含む一食の献立を3つ提案してください。ただし、献立の始めには###を、終わりには---をつけて、わかりやすく表示してください。また、材料やレシピは表示せず、料理名のみ出力してください。";
+    const aiChatMessage = await postChat({ promptText });
     addChatMessageElement("you", { content: promptText });
-    addChatMessageElement("ai", aiMessageChunk);
-    selectedIngredients = [];
-    const responseString = aiMessageChunk.content;
-
+    addChatMessageElement("ai", aiChatMessage);
+    const responseString = aiChatMessage.content;
     console.log(responseString); // これで返答をstring形式で取得できます
 
     // 献立を3つに分割（改行文字 "\n\n" を基準に分割する例）
-    const menuItems = responseString.split("###");
+    const menuItems = responseString.match(/###([\s\S]*?)---/g).map(item => item.replace(/###|---/g, '').trim());
 
     // 分割した献立をそれぞれ個別に保存または処理
-    const menu1 = menuItems[1];
-    const menu2 = menuItems[2];
-    const menu3 = menuItems[3];
+    const menu1 = menuItems[0];
+    const menu2 = menuItems[1];
+    const menu3 = menuItems[2];
 
     console.log("献立 1:", menu1);
     console.log("献立 2:", menu2);
     console.log("献立 3:", menu3);
+
+    // 必要に応じて他の処理を追加
+    // 3つの献立をページの下部に表示
+    displayMenu(menu1, menu2, menu3);
 };
