@@ -55,7 +55,7 @@ async function postChat(request) {
 
 
 
-const createButton = document.getElementById("button");
+const createButton = document.getElementById("selectButton");
 const choiceOfIngredients = ["豚肉", "牛肉", "魚", "卵", "鶏肉"]; //選択肢の食材の配列
 
 
