@@ -2,10 +2,10 @@ const chatMessagesElement = document.getElementById("chat-messages");
 const menu1Element = document.getElementById("menu1");
 const menu2Element = document.getElementById("menu2");
 const menu3Element = document.getElementById("menu3");
-const chatMessageTemplateElement = document.getElementById(
-  "chat-message-template"
-);
+const chatMessageTemplateElement = document.getElementById("chat-message-template");
 const submitButtonElement = document.getElementById("submit-button");
+const syokuzai = ["豚肉", "鯖", "ごはん", "味噌", "タマネギ", "人参", "じゃがいも", "砂糖", "塩","醤油","ごま油","ミカン"];
+const nedan = [300, 200, 300, 300];
 
 // メッセージを画面に描画する
 function addChatMessageElement(author, chatMessage) {
@@ -26,7 +26,7 @@ function addChatMessageElement(author, chatMessage) {
 
 // AIと対話する関数
 async function postChat(request) {
-    const response = await fetch("/chat", {
+  const response = await fetch("/chat", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -36,7 +36,50 @@ async function postChat(request) {
   return await response.json();
 }
 
-// 変更された displayMenu 関数
+// 材料の配列からsyokuzaiの要素を減算する関数
+function reduceIngredients(ingredientsText, syokuzai) {
+  const ingredientsList = ingredientsText.split('・').map(item => item.trim());
+  const reducedList = ingredientsList.filter(item => !syokuzai.includes(item));
+  return reducedList.join('・');
+}
+
+// 材料の配列からsyokuzaiの要素を残す関数
+function remainIngredients(ingredientsText, syokuzai) {
+  const ingredientsList = ingredientsText.split('・').map(item => item.trim());
+  const remainList = ingredientsList.filter(item => syokuzai.includes(item));
+  return remainList.join('・');
+}
+
+// レシピのレスポンスをHTMLで整形して表示する関数
+function displayRecipeResponse(response) {
+  const responseDisplayElement = document.getElementById('response-display');
+
+  // レスポンスをsyokuzaiに含まれる要素を減算する
+  const reducedIngredients = reduceIngredients(response, syokuzai);
+  const remainIngredientsList = remainIngredients(response, syokuzai);
+
+  // レスポンスを適切にHTMLフォーマットに変換
+  const formattedResponse = formatResponse(reducedIngredients);
+
+  responseDisplayElement.innerHTML = `<div class="recipe-box">${formattedResponse}</div>`;
+
+  // レスポンスをそのまま表示する
+  console.log("減算された材料リスト:", remainIngredientsList);
+}
+
+// レスポンスをHTMLフォーマットに変換する関数
+function formatResponse(response) {
+  // 改行を <br> タグに変換
+  let formatted = response.replace(/\n/g, '<br/>');
+
+  // ・で区切られた材料をリスト形式に変換
+  formatted = formatted.split('・').map(item => `<li>${item.trim()}</li>`).join('');
+  formatted = '<ul>' + formatted + '</ul>';
+
+  return formatted;
+}
+
+// displayMenu 関数
 function displayMenu(menu1, menu2, menu3) {
   menu1Element.innerHTML = formatMenu(menu1);
   menu2Element.innerHTML = formatMenu(menu2);
@@ -46,6 +89,9 @@ function displayMenu(menu1, menu2, menu3) {
   menu1Element.onclick = () => sendRecipeRequest(menu1);
   menu2Element.onclick = () => sendRecipeRequest(menu2);
   menu3Element.onclick = () => sendRecipeRequest(menu3);
+
+  // 献立の配列をconsole.logで表示
+  console.log("献立の配列:", [menu1, menu2, menu3]);
 }
 
 // 献立のテキストを改行形式でフォーマットする関数
@@ -55,7 +101,7 @@ function formatMenu(menu) {
 
 // レシピリクエストを送信する関数
 async function sendRecipeRequest(menu) {
-  const promptText = `${menu} この献立のレシピを送信してください。`;
+  const promptText = `必ず${syokuzai}の書き方に基づいて、${menu} この献立の料理のレシピの材料のみを送信してください。ただし数量や料理名は表示しないかつ、材料は必ず・で箇条書きしてください。`;
 
   const aiResponse = await postChat({ promptText });
 
@@ -63,31 +109,7 @@ async function sendRecipeRequest(menu) {
   displayRecipeResponse(aiResponse.content);
 }
 
-// レシピのレスポンスをHTMLで整形して表示する関数
-function displayRecipeResponse(response) {
-  const responseDisplayElement = document.getElementById('response-display');
-
-  // レスポンスを適切にHTMLフォーマットに変換
-  const formattedResponse = formatResponse(response);
-
-  responseDisplayElement.innerHTML = formattedResponse;
-}
-
-// レスポンスをHTMLフォーマットに変換する関数
-function formatResponse(response) {
-  // 改行を <br> タグに変換
-  let formatted = response.replace(/\n/g, '<br/>');
-
-  // リスト形式に変換 (例: "1. ..." -> "<ul><li>...</li></ul>")
-  formatted = formatted.replace(/(\d+)\.\s+/g, '<li>$&</li>');
-  formatted = '<ul>' + formatted + '</ul>';
-
-  // 必要に応じて追加のフォーマット処理を行う
-  // 例えば、段落ごとに <p> タグを追加するなど
-
-  return formatted;
-}
-
+// ボタン作成のコード（省略）
 
 const createButton = document.getElementById("selectButton");
 const choiceOfIngredients = ["豚肉", "牛肉", "魚", "卵", "鶏肉"]; //選択肢の食材の配列
