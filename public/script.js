@@ -140,7 +140,20 @@ document.addEventListener('click', function(event) {
 });
 
 submitButtonElement.onclick = async () => {
-    const promptText = selectedIngredients.join("と") + "を用いた主菜を含む一食の献立を3つ提案してください。ただし、一つ一つの献立の始めには###を、終わりには---をつけて、わかりやすく表示してください。また、材料やレシピは表示せず、料理名のみ出力してください。";
+    const cookTime = document.getElementById("cook-time-slider").value;
+    const peopleNumber = document.getElementById("people-number-slider").value;
+    const otherRequest = document.getElementById("more-request-message").value;
+    const otherMenu = document.getElementById("tuika").value;
+
+    const menuCheckedBoxes = document.querySelectorAll('input[name="dish"]:checked');
+
+    // チェックがついたチェックボックスの値を配列に変換
+    const menuList = Array.from(menuCheckedBoxes).map(checkbox => checkbox.value);
+  
+    // 配列をコンソールに出力
+    console.log(menuList);
+
+    const promptText = selectedIngredients.join("と") + "を用いた主菜を含む一食の献立を3つ提案してください。ただし、一つ一つの献立の始めには###を、終わりには---をつけて、わかりやすく表示してください。また、材料やレシピは表示せず、料理名のみ出力してください。ただし、献立の条件を以下のようにします。#調理時間は"+cookTime+"分以内であること。 #" + peopleNumber + "人分であること。 #" + menuList.join("と")+ "と他" + otherMenu + "品で構成されていること。 #" + otherRequest;
     const aiChatMessage = await postChat({ promptText });
     addChatMessageElement("you", { content: promptText });
     addChatMessageElement("ai", aiChatMessage);
@@ -163,3 +176,22 @@ submitButtonElement.onclick = async () => {
     // 3つの献立をページの下部に表示
     displayMenu(menu1, menu2, menu3);
 };
+
+
+  const cookTimeSlider = document.getElementById("cook-time-slider");
+  const peopleNumberSlider = document.getElementById("people-number-slider");
+  const cookTimeDisplay = document.getElementById('cook-time-display');
+  const peopleNumberDisplay = document.getElementById('people-number-display');
+
+  // 初期表示
+  cookTimeDisplay.textContent = cookTimeSlider.value + "分以内";
+  peopleNumberDisplay.textContent = peopleNumberSlider.value + "人";
+
+  // イベントリスナーを追加
+  cookTimeSlider.addEventListener('input', function() {
+      cookTimeDisplay.textContent = this.value + "分以内";
+  });
+
+  peopleNumberSlider.addEventListener('input', function() {
+      peopleNumberDisplay.textContent = this.value + "人";
+  });

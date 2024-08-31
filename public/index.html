@@ -42,45 +42,46 @@
   <body>
     <h1>AI チャット</h1>
     <!-- レスポンスを表示するための要素 -->
-
+    <div id="time-people">
     <div id="cook-time" class="slider-container">
-      10分以内
-      <input type="range" min="0" max="100" value="0" step="10" id="cook-time-slider">
-      100分以内
+      調理時間
+      <input type="range" min="10" max="100" value="10" step="10" id="cook-time-slider">
+      <div id="cook-time-display">10</div>
     </div>
-    <div id="peopele-number" class="slider-container">
-      1人
-      <input type="range" min="1" max="6" value="1" step="1" id="peopele-number-slider" class="sliderbar">
-      6人
+    <div id="people-number" class="slider-container">
+      人数
+      <input type="range" min="1" max="6" value="1" step="1" id="people-number-slider" class="sliderbar">
+      <div id="people-number-display">1</div>
     </div>
+  </div>
     <div id="more-request">
       <div>その他の要望</div>
       <input id="more-request-message" />
     </div>
     <div id="select-dish">
-      <form>
+      <form id="menu-list">
         <label>
-          <input type="checkbox" name="shusai" id="shusai" value="">
+          <input type="checkbox" name="dish" id="shusai" value="主菜" checked>
           主菜
         </label>
         <label>
-          <input type="checkbox" name="hukusai" id="hukusai" value="">
+          <input type="checkbox" name="dish" id="hukusai" value="副菜">
           副菜
         </label>
         <label>
-          <input type="checkbox" name="sarada" id="sarada" value="">
+          <input type="checkbox" name="dish" id="sarada" value="サラダ" checked>
           サラダ
         </label>
         <label>
-          <input type="checkbox" name="shirumono" id="shirumono" value="">
+          <input type="checkbox" name="dish" id="shirumono" value="汁物" checked>
           汁物
         </label>
         <label for="dropdown">追加の品:</label>
-        <select id="dropdown" name="tuika" id="tuika">
-          <option value="option1">なし</option>
-          <option value="option2">１つ</option>
-          <option value="option3">２つ</option>
-          <option value="option3">３つ</option>
+        <select name="tuika" id="tuika">
+          <option value="0">なし</option>
+          <option value="1">１つ</option>
+          <option value="2">２つ</option>
+          <option value="3">３つ</option>
         </select>
       </form>      
     </div>
