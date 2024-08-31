@@ -112,16 +112,50 @@ async function sendRecipeRequest(menu) {
 // ボタン作成のコード（省略）
 
 const createButton = document.getElementById("selectButton");
-const choiceOfIngredients = ["豚肉", "牛肉", "魚", "卵", "鶏肉"]; //選択肢の食材の配列
+const choiceGenre = ["肉類", "野菜・果実類", "魚類", "乾物・海藻類", "きのこ・山菜類", "卵類", "いも類", "パン類", "ごはん類", "乳製品類", "豆・豆腐・豆腐加工品類", "麺類", "その他食材"];
 
-choiceOfIngredients.forEach((ingredient) => { //choiceOfIngredientsの配列からそれぞれのボタンを作成
+// 各ジャンルに対応する食材リストをオブジェクトで定義
+const ingredients = {
+  "肉類": ["牛肉", "豚肉", "鶏肉", "ひき肉"],
+  "野菜・果実類": ["キャベツ", "人参", "レタス", "白菜", "玉ねぎ", "長ネギ", "もやし", "トマト", "きゅうり", "なす", "ピーマン", "かぼちゃ", "大根", "レンコン", "アボカド"],
+  "魚類": ["鮭・サーモン", "マグロ", "さば", "さんま", "ツナ缶", "エビ・カニ", "イカ・タコ", "貝類", "練り物"],
+  "乾物・海藻類": ["昆布", "ひじき", "わかめ", "お麩", "春雨"],
+  "きのこ・山菜類": ["しいたけ", "まいたけ", "しめじ", "エリンギ", "えのき", "山菜"],
+  "卵類": ["卵"],
+  "いも類": ["じゃがいも", "さつまいも", "里芋", "長芋・山芋", "こんにゃく"],
+  "パン類": ["食パン", "クロワッサン"],
+  "ごはん類": ["白米", "玄米", "もち米", "餅", "五穀米"],
+  "乳製品類": ["牛乳", "チーズ", "ヨーグルト", "生クリーム"],
+  "豆・豆腐・豆腐加工品類": ["豆腐", "納豆", "油揚げ", "厚揚げ"],
+  "麺類": ["うどん", "そば", "そうめん", "中華麺", "パスタ・スパゲティ"],
+};
+
+// ジャンルボタンを作成
+choiceGenre.forEach((genre) => {
   const newButton = document.createElement("button");
-  newButton.textContent = ingredient;
+  newButton.textContent = genre;
   newButton.type = "button";
-  newButton.classList.add("select-btn");
+  newButton.classList.add(genre);
   createButton.appendChild(newButton);
-});
 
+  // 各ジャンルボタンのクリックイベントを設定
+  newButton.onclick = () => {
+    // 既存の食材ボタンを削除
+    const existingButtons = document.querySelectorAll(".select-btn");
+    existingButtons.forEach(btn => btn.remove());
+
+    // ジャンルに対応する食材のボタンを生成
+    if (ingredients[genre]) {
+      ingredients[genre].forEach((item) => {
+        const ingredientButton = document.createElement("button");
+        ingredientButton.textContent = item;
+        ingredientButton.type = "button";
+        ingredientButton.classList.add("select-btn");
+        createButton.appendChild(ingredientButton);
+      });
+    }
+  };
+});
 const selectedIngredients = [];
 const showSelectedIngredients = document.getElementById("selectedIngredients");
 
