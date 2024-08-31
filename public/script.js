@@ -3,13 +3,13 @@ const chatMessageTemplateElement = document.getElementById(
   "chat-message-template"
 );
 const inputFormElement = document.getElementById("input-form");
-const promptTextInputElement = document.getElementById("prompt-text-input")+"を用いた主菜を含む献立を提案してください";
+const promptTextInputElement = document.getElementById("prompt-text-input");
 
 inputFormElement.onsubmit = async (event) => {
     // フォームが送信されたときのページ遷移を防ぐ
     event.preventDefault();
 
-    const promptText = promptTextInputElement.value.trim();
+    const promptText = promptTextInputElement.value.trim()+"を用いた主菜を含む一食の献立を3つ提案してください";
     if (promptText === "") return;
     promptTextInputElement.value = "";
 
