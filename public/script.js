@@ -140,7 +140,7 @@ document.addEventListener('click', function(event) {
 });
 
 submitButtonElement.onclick = async () => {
-    const promptText = selectedIngredients.join("と") + "を用いた主菜を含む一食の献立を3つ提案してください。ただし、献立の始めには###を、終わりには---をつけて、わかりやすく表示してください。また、材料やレシピは表示せず、料理名のみ出力してください。";
+    const promptText = selectedIngredients.join("と") + "を用いた主菜を含む一食の献立を3つ提案してください。ただし、一つ一つの献立の始めには###を、終わりには---をつけて、わかりやすく表示してください。また、材料やレシピは表示せず、料理名のみ出力してください。";
     const aiChatMessage = await postChat({ promptText });
     addChatMessageElement("you", { content: promptText });
     addChatMessageElement("ai", aiChatMessage);
