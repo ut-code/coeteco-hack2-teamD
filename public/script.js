@@ -44,9 +44,9 @@ const choiceOfIngredients = ["豚肉", "牛肉", "魚", "卵", "鶏肉"]; //選�
 choiceOfIngredients.forEach((ingredient) => { //choiceOfIngredientsの配列からそれぞれのボタンを作成
   const newButton = document.createElement("button");
   newButton.textContent = ingredient;
-  newButton.type = "button"; 
+  newButton.type = "button";
   newButton.classList.add("select-btn");
-  createButton.appendChild(newButton); 
+  createButton.appendChild(newButton);
 });
 
 const selectedIngredients = [];
@@ -86,6 +86,7 @@ document.addEventListener('click', function(event) {
     console.log(ingredient);
     console.log(selectedIngredients);
   }
+});
 
 submitButtonElement.onclick = async () => {
     const promptText = selectedIngredients.join("と") + "を用いた主菜を含む一食の献立を3つ提案してください";
