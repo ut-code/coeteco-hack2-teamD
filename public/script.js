@@ -3,6 +3,10 @@ const chatMessageTemplateElement = document.getElementById("chat-message-templat
 const inputFormElement = document.getElementById("input-form");
 const promptTextInputElement = document.getElementById("prompt-text-input");
 
+const menu1Element = document.getElementById("menu1");
+const menu2Element = document.getElementById("menu2");
+const menu3Element = document.getElementById("menu3");
+
 inputFormElement.onsubmit = async (event) => {
   // フォームが送信されたときのページ遷移を防ぐ
   event.preventDefault();
@@ -27,18 +31,20 @@ inputFormElement.onsubmit = async (event) => {
   console.log(responseString); // これで返答をstring形式で取得できます
 
   // 献立を3つに分割（改行文字 "\n\n" を基準に分割する例）
-  const menuItems = responseString.split("###");
+  const menuItems = responseString.match(/###([\s\S]*?)---/g).map(item => item.replace(/###|---/g, '').trim());
 
   // 分割した献立をそれぞれ個別に保存または処理
-  const menu1 = menuItems[1];
-  const menu2 = menuItems[2];
-  const menu3 = menuItems[3];
+  const menu1 = menuItems[0];
+  const menu2 = menuItems[1];
+  const menu3 = menuItems[2];
 
   console.log("献立 1:", menu1);
   console.log("献立 2:", menu2);
   console.log("献立 3:", menu3);
 
   // 必要に応じて他の処理を追加
+  // 3つの献立をページの下部に表示
+  displayMenu(menu1, menu2, menu3);
 };
 
 // メッセージを画面に描画する
@@ -70,4 +76,10 @@ async function postChat(request) {
 
   // レスポンスをJSONとして解析
   return await response.json();
+}
+
+function displayMenu(menu1, menu2, menu3) {
+  menu1Element.textContent = menu1;
+  menu2Element.textContent = menu2;
+  menu3Element.textContent = menu3;
 }

@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI チャット</title>
     <link rel="stylesheet" href="./style.css" />
+    <style>
+      /* CSSスタイルの追加 */
+      .menu-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+      }
+  
+      .menu-item {
+        border: 2px solid #333;
+        padding: 15px;
+        width: 30%;
+        box-sizing: border-box;
+        border-radius: 5px;
+      }
+    </style>
   </head>
   <body>
     <h1>AI チャット</h1>
@@ -23,6 +39,11 @@
         <input id="prompt-text-input" />
         <button type="submit">送信</button>
       </form>
+    <div class="menu-container">
+        <div id="menu1" class="menu-item"></div>
+        <div id="menu2" class="menu-item"></div>
+        <div id="menu3" class="menu-item"></div>
+      </div>
     <script src="/script.js"></script>
   </body>
 </html>
