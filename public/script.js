@@ -2,23 +2,6 @@ const chatMessagesElement = document.getElementById("chat-messages");
 const chatMessageTemplateElement = document.getElementById(
   "chat-message-template"
 );
-const inputFormElement = document.getElementById("input-form");
-const promptTextInputElement = document.getElementById("prompt-text-input");
-
-inputFormElement.onsubmit = async (event) => {
-    // フォームが送信されたときのページ遷移を防ぐ
-    event.preventDefault();
-
-    const promptText = promptTextInputElement.value.trim();
-    if (promptText === "") return;
-    promptTextInputElement.value = "";
-
-    const yourChatMessage = { content: promptText };
-    addChatMessageElement("you", yourChatMessage);
-
-    const aiChatMessage = await postChat({ promptText });
-    addChatMessageElement("ai", aiChatMessage);
-  };
 
 // メッセージを画面に描画する
 function addChatMessageElement(author, chatMessage) {
@@ -51,11 +34,18 @@ async function postChat(request) {
       body: JSON.stringify(request),
     });
     return await response.json();
-  }
+}
 
 const buttons = document.querySelectorAll("button")
-buttons.forEach(button => {button.addEventListener('click', function(){
-  buttonText = button.textContent || button.innerText;
-  console.log(buttonText);
-  });
-});
+buttons.forEach(button => {button.addEventListener('click', async function(){
+    buttonText = button.textContent || button.innerText;
+    const promptText = buttonText.trim()+"を用いた主菜を含む一食の献立を3つ提案してください";
+
+    const yourChatMessage = { content: promptText };
+    addChatMessageElement("you", yourChatMessage);
+
+    const aiChatMessage = await postChat({ promptText });
+    addChatMessageElement("ai", aiChatMessage);
+    });
+}
+);
