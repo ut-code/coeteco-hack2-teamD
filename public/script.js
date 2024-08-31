@@ -2,23 +2,7 @@ const chatMessagesElement = document.getElementById("chat-messages");
 const chatMessageTemplateElement = document.getElementById(
   "chat-message-template"
 );
-const inputFormElement = document.getElementById("input-form");
-const promptTextInputElement = document.getElementById("prompt-text-input");
-
-inputFormElement.onsubmit = async (event) => {
-    // フォームが送信されたときのページ遷移を防ぐ
-    event.preventDefault();
-
-    const promptText = promptTextInputElement.value.trim();
-    if (promptText === "") return;
-    promptTextInputElement.value = "";
-
-    const yourChatMessage = { content: promptText };
-    addChatMessageElement("you", yourChatMessage);
-
-    const aiChatMessage = await postChat({ promptText });
-    addChatMessageElement("ai", aiChatMessage);
-  };
+const submitButtonElement = document.getElementById("submit-button");
 
 // メッセージを画面に描画する
 function addChatMessageElement(author, chatMessage) {
@@ -51,8 +35,7 @@ async function postChat(request) {
       body: JSON.stringify(request),
     });
     return await response.json();
-  }
-
+}
 
 
 const createButton = document.getElementById("selectButton");
@@ -103,4 +86,26 @@ document.addEventListener('click', function(event) {
     console.log(ingredient);
     console.log(selectedIngredients);
   }
-});
+
+submitButtonElement.onclick = async () => {
+    const promptText = selectedIngredients.join("と") + "を用いた主菜を含む一食の献立を3つ提案してください";
+    const aiMessageChunk = await postChat({ promptText });
+    addChatMessageElement("you", { content: promptText });
+    addChatMessageElement("ai", aiMessageChunk);
+    selectedIngredients = [];
+    const responseString = aiMessageChunk.content;
+
+    console.log(responseString); // これで返答をstring形式で取得できます
+
+    // 献立を3つに分割（改行文字 "\n\n" を基準に分割する例）
+    const menuItems = responseString.split("###");
+
+    // 分割した献立をそれぞれ個別に保存または処理
+    const menu1 = menuItems[1];
+    const menu2 = menuItems[2];
+    const menu3 = menuItems[3];
+
+    console.log("献立 1:", menu1);
+    console.log("献立 2:", menu2);
+    console.log("献立 3:", menu3);
+};
