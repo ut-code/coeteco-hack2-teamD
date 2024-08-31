@@ -52,3 +52,10 @@ async function postChat(request) {
     });
     return await response.json();
   }
+
+const buttons = document.querySelectorAll("button")
+buttons.forEach(button => {button.addEventListener('click', function(){
+  buttonText = button.textContent || button.innerText;
+  console.log(buttonText);
+  });
+});
