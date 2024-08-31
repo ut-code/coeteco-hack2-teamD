@@ -53,6 +53,17 @@ async function postChat(request) {
     return await response.json();
   }
 
+
+const createButton = document.getElementById("selectButton");
+const buttonElement = ["豚肉", "牛肉", "魚", "卵"];
+
+buttonElement.forEach((food) => {
+  const newButton = document.createElement("button");
+  newButton.textContent = food;
+  newButton.type = "button";
+  createButton.appendChild(newButton);
+});
+
 const buttons = document.querySelectorAll("button")
 buttons.forEach(button => {button.addEventListener('click', function(){
   buttonText = button.textContent || button.innerText;
