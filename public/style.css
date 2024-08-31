@@ -1,3 +1,4 @@
+/*
 #chat-messages {
     list-style-type: none;
     padding: 0;
@@ -66,4 +67,206 @@
   color: #ff0000;
   border:2px black;
   padding:20px 10px
+}
+
+*/
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fafafa;
+  color: #333;
+  line-height: 1.6;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px 0;
+  color: #2c3e50;
+}
+
+.slider-container {
+  display: flex;
+  align-items: center;
+  margin: 10px 20px;
+  padding: 10px;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+}
+
+#cook-time,
+#peopele-number {
+  margin-top: 20px;
+}
+
+.slider-container input[type="range"] {
+  margin: 0 10px;
+  flex-grow: 1;
+}
+
+#more-request {
+  margin: 20px 20px;
+  padding: 10px;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+}
+
+#more-request input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+}
+
+#select-dish {
+  margin: 20px 20px;
+  padding: 10px;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+}
+
+#select-dish label {
+  display: block;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+#select-dish input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+#dropdown {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+}
+
+#selectButton {
+  margin: 20px 20px;
+  padding: 10px;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.select-btn {
+  margin: 5px;
+  padding: 10px 15px;
+  background-color: #2ecc71;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.select-btn:hover {
+  background-color: #27ae60;
+}
+
+#selectedIngredients {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 10px 20px;
+}
+
+#selectedIngredients li {
+  margin: 5px 0;
+  padding: 10px;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-btn {
+  padding: 5px 10px;
+  background-color: #e74c3c;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}
+
+#submit-button {
+  display: block;
+  width: calc(100% - 40px);
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #3498db;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+}
+
+#submit-button:hover {
+  background-color: #2980b9;
+}
+
+#response-display {
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menu-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.menu-item {
+  padding: 20px;
+  width: 30%;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.menu-item:hover {
+  transform: scale(1.05);
+}
+
+.chat-message {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+}
+
+.chat-message__author {
+  font-weight: bold;
+}
+
+.chat-message__content {
+  margin-left: 10px;
+  flex-grow: 1;
+}
+
+.chat-message__delete-button {
+  padding: 5px 10px;
+  background-color: #e74c3c;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.chat-message__delete-button:hover {
+  background-color: #c0392b;
 }

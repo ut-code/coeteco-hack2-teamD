@@ -41,6 +41,55 @@
   </head>
   <body>
     <h1>AI チャット</h1>
+    <!-- レスポンスを表示するための要素 -->
+<div id="response-display"></div>
+    <div id="cook-time" class="slider-container">
+      10分以内
+      <input type="range" min="0" max="100" value="0" step="10" id="cook-time-slider">
+      100分以内
+    </div>
+    <div id="peopele-number" class="slider-container">
+      1人
+      <input type="range" min="1" max="6" value="1" step="1" id="peopele-number-slider" class="sliderbar">
+      6人
+    </div>
+    <div id="more-request">
+      <div>その他の要望</div>
+      <input id="more-request-message" />
+    </div>
+    <div id="select-dish">
+      <form>
+        <label>
+          <input type="checkbox" name="shusai" id="shusai" value="">
+          主菜
+        </label>
+        <label>
+          <input type="checkbox" name="hukusai" id="hukusai" value="">
+          副菜
+        </label>
+        <label>
+          <input type="checkbox" name="sarada" id="sarada" value="">
+          サラダ
+        </label>
+        <label>
+          <input type="checkbox" name="shirumono" id="shirumono" value="">
+          汁物
+        </label>
+        <label for="dropdown">追加の品:</label>
+        <select id="dropdown" name="tuika" id="tuika">
+          <option value="option1">なし</option>
+          <option value="option2">１つ</option>
+          <option value="option3">２つ</option>
+          <option value="option3">３つ</option>
+        </select>
+      </form>      
+    </div>
+    <div id="selectButton"></div>
+    <div>選択した食材</div>
+    <ul id="selectedIngredients"></ul>
+    <button id="submit-button">送信</button>
+
+    <!-- チャットボックス --> 
     <ul id="chat-messages">
         <template id="chat-message-template">
             <li class="chat-message">
@@ -59,17 +108,7 @@
   <div id="menu3" class="menu-item"></div>
 </div>
 
-<!-- レスポンスを表示するための要素 -->
-<div id="response-display"></div>
-    <div id="cook-time">
-      10分
-      <input type="range" min="0" max="100" value="0" step="10" id="cook-time-slider">
-      100分~
-    </div>
-    <div id="selectButton"></div>
-    <div>選択した食材</div>
-    <ul id="selectedIngredients"></ul>
-    <button id="submit-button">送信</button>
+
     <script src="/script.js"></script>
   </body>
 </html>
