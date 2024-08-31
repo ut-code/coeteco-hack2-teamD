@@ -1,0 +1,16 @@
+{
+  "name": "coeteco-hack2-teamd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --env-file=.env server.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@langchain/openai": "^0.2.8",
+    "express": "^4.19.2"
+  }
+}
