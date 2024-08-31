@@ -60,13 +60,17 @@ const buttonElement = ["豚肉", "牛肉", "魚", "卵"];
 buttonElement.forEach((food) => {
   const newButton = document.createElement("button");
   newButton.textContent = food;
-  newButton.type = "button";
-  createButton.appendChild(newButton);
+  newButton.type = "button"; 
+  newButton.classList.add("select-btn")
+  createButton.appendChild(newButton); 
 });
 
-const buttons = document.querySelectorAll("button")
-buttons.forEach(button => {button.addEventListener('click', function(){
-  buttonText = button.textContent || button.innerText;
-  console.log(buttonText);
+selectedIngredients = []
+const selectButtons = document.querySelectorAll(".select-btn")
+selectButtons.forEach(selectButton => {selectButton.addEventListener('click', function(){
+  ingredient = selectButton.textContent;
+  selectedIngredients.push(ingredient);
+  console.log(ingredient);
+  console.log(selectedIngredients);
   });
 });
