@@ -66,7 +66,7 @@ async function sendRecipeRequest(menu) {
 // レシピのレスポンスをHTMLで整形して表示する関数
 function displayRecipeResponse(response) {
   const responseDisplayElement = document.getElementById('response-display');
-  
+
   // レスポンスを適切にHTMLフォーマットに変換
   const formattedResponse = formatResponse(response);
 
@@ -77,7 +77,7 @@ function displayRecipeResponse(response) {
 function formatResponse(response) {
   // 改行を <br> タグに変換
   let formatted = response.replace(/\n/g, '<br/>');
-  
+
   // リスト形式に変換 (例: "1. ..." -> "<ul><li>...</li></ul>")
   formatted = formatted.replace(/(\d+)\.\s+/g, '<li>$&</li>');
   formatted = '<ul>' + formatted + '</ul>';
@@ -141,7 +141,7 @@ document.addEventListener('click', function(event) {
 
 submitButtonElement.onclick = async () => {
     const promptText = selectedIngredients.join("と") + "を用いた主菜を含む一食の献立を3つ提案してください。ただし、献立の始めには###を、終わりには---をつけて、わかりやすく表示してください。また、材料やレシピは表示せず、料理名のみ出力してください。";
-    const aiMessageChunk = await postChat({ promptText });
+    const aiChatMessage = await postChat({ promptText });
     addChatMessageElement("you", { content: promptText });
     addChatMessageElement("ai", aiChatMessage);
     const responseString = aiChatMessage.content;
