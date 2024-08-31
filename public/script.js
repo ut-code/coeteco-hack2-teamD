@@ -13,7 +13,7 @@ inputFormElement.onsubmit = async (event) => {
 
   const promptText =
     promptTextInputElement.value.trim() +
-    "を用いた主菜を含む一食の献立を3つ提案してください。ただし、献立はわかりやすく表に整理して要素ごとに改行して表示してください。";
+    "を用いた主菜を含む一食の献立を3つ提案してください。ただし、献立はわかりやすく###と---に囲んで表示してください";
   if (promptText === "") return;
   promptTextInputElement.value = "";
 
@@ -78,8 +78,35 @@ async function postChat(request) {
   return await response.json();
 }
 
+// 変更された displayMenu 関数
 function displayMenu(menu1, menu2, menu3) {
-  menu1Element.textContent = menu1;
-  menu2Element.textContent = menu2;
-  menu3Element.textContent = menu3;
+  menu1Element.innerHTML = formatMenu(menu1);
+  menu2Element.innerHTML = formatMenu(menu2);
+  menu3Element.innerHTML = formatMenu(menu3);
+
+  // クリックイベントの追加
+  menu1Element.onclick = () => sendRecipeRequest(menu1);
+  menu2Element.onclick = () => sendRecipeRequest(menu2);
+  menu3Element.onclick = () => sendRecipeRequest(menu3);
+}
+
+// 献立のテキストを改行形式でフォーマットする関数
+function formatMenu(menu) {
+  return menu.replace(/#/g, '<br/>#');
+}
+
+// レシピリクエストを送信する関数
+async function sendRecipeRequest(menu) {
+  const promptText = `${menu} この献立のレシピを送信してください。`;
+
+  const aiResponse = await postChat({ promptText });
+
+  // レスポンスをページ上の指定された場所に表示
+  displayRecipeResponse(aiResponse.content);
+}
+
+// レシピのレスポンスをページ上に表示する関数
+function displayRecipeResponse(response) {
+  const responseDisplayElement = document.getElementById('response-display');
+  responseDisplayElement.textContent = response;
 }
