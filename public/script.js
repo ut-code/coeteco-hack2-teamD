@@ -13,7 +13,7 @@ inputFormElement.onsubmit = async (event) => {
 
   const promptText =
     promptTextInputElement.value.trim() +
-    "を用いた主菜を含む一食の献立を3つ提案してください。ただし、献立はわかりやすく###と---に囲んで表示してください。また、材料やレシピは表示せず、料理名のみ出力してください。";
+    "を用いた主菜を含む一食の献立を3つ提案してください。ただし、献立は一つの献立ごとに###と---に囲んで、わかりやすく表示してください。また、材料やレシピは表示せず、料理名のみ出力してください。";
   if (promptText === "") return;
   promptTextInputElement.value = "";
 
