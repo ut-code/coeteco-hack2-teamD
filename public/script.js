@@ -54,12 +54,14 @@ async function postChat(request) {
   }
 
 
-const createButton = document.getElementById("selectButton");
-const buttonElement = ["豚肉", "牛肉", "魚", "卵"];
 
-buttonElement.forEach((food) => {
+const createButton = document.getElementById("button");
+const choiceOfIngredients = ["豚肉", "牛肉", "魚", "卵", "鶏肉"]; //選択肢の食材の配列
+
+
+choiceOfIngredients.forEach((ingredient) => { //choiceOfIngredientsの配列からそれぞれのボタンを作成
   const newButton = document.createElement("button");
-  newButton.textContent = food;
+  newButton.textContent = ingredient;
   newButton.type = "button"; 
   newButton.classList.add("select-btn")
   createButton.appendChild(newButton); 
@@ -69,7 +71,11 @@ selectedIngredients = []
 const selectButtons = document.querySelectorAll(".select-btn")
 selectButtons.forEach(selectButton => {selectButton.addEventListener('click', function(){
   ingredient = selectButton.textContent;
-  selectedIngredients.push(ingredient);
+  if (selectedIngredients.includes(ingredient)) {
+    console.log(`${ingredient}はすでに選択されています`)
+  } else {
+    selectedIngredients.push(ingredient);
+  }
   console.log(ingredient);
   console.log(selectedIngredients);
   });
