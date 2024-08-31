@@ -59,3 +59,14 @@ buttons.forEach(button => {button.addEventListener('click', function(){
   console.log(buttonText);
   });
 });
+
+
+//cook-timeのsliderのデザインと値
+const cookTimeSlider = document.getElementById('cook-time-slider');
+const sliderValue = document.getElementById('slider-value');
+
+sliderValue.textContent = cookTimeSlider.value;
+
+cookTimeSlider.addEventListener('input', () => {
+    sliderValue.textContent = cookTimeSlider.value + '分';
+});

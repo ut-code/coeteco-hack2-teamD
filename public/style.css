@@ -43,7 +43,9 @@
 .button {
   border:2px solid black;
   border-radius: 2px;
-  padding: 10px 10px
+  padding: 10px 10px;
+  width: 100px;
+  height:100px;
 }
 
 .button:hover{
@@ -62,8 +64,44 @@
   color: #ff0000;
 }
 
-#cook-time{
+#cook-time-container{
+  width:360px;
   color: #ff0000;
-  border:2px black;
+  border:2px solid black;
   padding:20px 10px
+}
+
+#slider-value {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+.proposal-container {
+  width: 80%;
+  max-width: 600px;
+  display: flex;
+}
+
+.proposal {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.proposal-details {
+  display: none;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #ddd;
+  position: absolute;
+  width: calc(100% - 20px);
+  bottom: 0;
+}
+
+.proposal.active .proposal-details {
+  display: block;
 }
