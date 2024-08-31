@@ -9,20 +9,18 @@
   <body>
     <h1>AI チャット</h1>
     <ul id="chat-messages">
-        <template id="chat-message-template">
-            <li class="chat-message">
-                <div class="chat-message__author">あなた</div>
-                <div class="chat-message__content"></div>
-                <button class="chat-message__delete-button" type="button">
-                  削除
-                </button>
-            </li>
-          </template>
+      <template id="chat-message-template">
+        <li class="chat-message">
+          <div class="chat-message__author">あなた</div>
+          <div class="chat-message__content"></div>
+          <button class="chat-message__delete-button" type="button">削除</button>
+        </li>
+      </template>
     </ul>
     <div id="cook-time">
-      10分
+      <span>10分</span>
       <input type="range" min="0" max="100" value="0" step="10" id="cook-time-slider">
-      100分~
+      <span>100分~</span>
     </div>
     <div id="selectButton"></div>
     <div>選択した食材</div>
