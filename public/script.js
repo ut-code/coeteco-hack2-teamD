@@ -58,25 +58,49 @@ async function postChat(request) {
 const createButton = document.getElementById("selectButton");
 const choiceOfIngredients = ["豚肉", "牛肉", "魚", "卵", "鶏肉"]; //選択肢の食材の配列
 
-
 choiceOfIngredients.forEach((ingredient) => { //choiceOfIngredientsの配列からそれぞれのボタンを作成
   const newButton = document.createElement("button");
   newButton.textContent = ingredient;
   newButton.type = "button"; 
-  newButton.classList.add("select-btn")
+  newButton.classList.add("select-btn");
   createButton.appendChild(newButton); 
 });
 
-selectedIngredients = []
-const selectButtons = document.querySelectorAll(".select-btn")
-selectButtons.forEach(selectButton => {selectButton.addEventListener('click', function(){
-  ingredient = selectButton.textContent;
-  if (selectedIngredients.includes(ingredient)) {
-    console.log(`${ingredient}はすでに選択されています`)
-  } else {
-    selectedIngredients.push(ingredient);
+const selectedIngredients = [];
+const showSelectedIngredients = document.getElementById("selectedIngredients");
+
+document.addEventListener('click', function(event) {
+  if (event.target.matches('.select-btn')) {
+    const ingredient = event.target.textContent;
+    if (selectedIngredients.includes(ingredient)) {
+      console.log(`${ingredient}はすでに選択されています`);
+    } else {
+      selectedIngredients.push(ingredient);
+
+      const selectedIngredientsList = document.createElement("li");
+      selectedIngredientsList.textContent = ingredient;
+
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "削除";
+      deleteButton.classList.add("delete-btn");
+      deleteButton.dataset.ingredient = ingredient; // 削除ボタンに食材情報を追加
+
+      selectedIngredientsList.appendChild(deleteButton);
+      showSelectedIngredients.appendChild(selectedIngredientsList);
+
+      console.log(ingredient);
+      console.log(selectedIngredients);
+    }
+  } else if (event.target.matches('.delete-btn')) {
+    const ingredient = event.target.dataset.ingredient;
+    const index = selectedIngredients.indexOf(ingredient);
+
+    if (index !== -1) {
+      selectedIngredients.splice(index, 1); // 配列から食材を削除
+      event.target.parentElement.remove(); // リストアイテムを削除
+    }
+
+    console.log(ingredient);
+    console.log(selectedIngredients);
   }
-  console.log(ingredient);
-  console.log(selectedIngredients);
-  });
 });
