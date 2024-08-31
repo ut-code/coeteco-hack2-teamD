@@ -3,7 +3,7 @@ const chatMessageTemplateElement = document.getElementById(
   "chat-message-template"
 );
 const inputFormElement = document.getElementById("input-form");
-const promptTextInputElement = document.getElementById("prompt-text-input");
+const promptTextInputElement = document.getElementById("prompt-text-input")+"を用いた主菜を含む献立を提案してください";
 
 inputFormElement.onsubmit = async (event) => {
     // フォームが送信されたときのページ遷移を防ぐ
