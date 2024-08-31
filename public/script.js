@@ -105,8 +105,27 @@ async function sendRecipeRequest(menu) {
   displayRecipeResponse(aiResponse.content);
 }
 
-// レシピのレスポンスをページ上に表示する関数
+// レシピのレスポンスをHTMLで整形して表示する関数
 function displayRecipeResponse(response) {
   const responseDisplayElement = document.getElementById('response-display');
-  responseDisplayElement.textContent = response;
+  
+  // レスポンスを適切にHTMLフォーマットに変換
+  const formattedResponse = formatResponse(response);
+
+  responseDisplayElement.innerHTML = formattedResponse;
+}
+
+// レスポンスをHTMLフォーマットに変換する関数
+function formatResponse(response) {
+  // 改行を <br> タグに変換
+  let formatted = response.replace(/\n/g, '<br/>');
+  
+  // リスト形式に変換 (例: "1. ..." -> "<ul><li>...</li></ul>")
+  formatted = formatted.replace(/(\d+)\.\s+/g, '<li>$&</li>');
+  formatted = '<ul>' + formatted + '</ul>';
+
+  // 必要に応じて追加のフォーマット処理を行う
+  // 例えば、段落ごとに <p> タグを追加するなど
+
+  return formatted;
 }
