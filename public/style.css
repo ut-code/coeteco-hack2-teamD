@@ -38,3 +38,32 @@
   .chat-message--ai {
     border-color: #0000ff;
   }
+
+
+.button {
+  border:2px solid black;
+  border-radius: 2px;
+  padding: 10px 10px
+}
+
+.button:hover{
+  border:3px solid aquamarine;
+}
+
+.button-letter {
+  font-size: 10px;
+  color: red;
+}
+
+#cook-time-slider{
+  width: 250px;
+  text-align: center;
+  overflow: hidden;
+  color: #ff0000;
+}
+
+#cook-time{
+  color: #ff0000;
+  border:2px black;
+  padding:20px 10px
+}

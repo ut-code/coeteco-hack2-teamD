@@ -52,10 +52,6 @@
             </li>
           </template>
     </ul>
-    <form id="input-form">
-        <input id="prompt-text-input" />
-        <button type="submit">送信</button>
-      </form>
     <!-- 献立を表示するためのコンテナ -->
 <div class="menu-container">
   <div id="menu1" class="menu-item"></div>
@@ -65,6 +61,15 @@
 
 <!-- レスポンスを表示するための要素 -->
 <div id="response-display"></div>
+    <div id="cook-time">
+      10分
+      <input type="range" min="0" max="100" value="0" step="10" id="cook-time-slider">
+      100分~
+    </div>
+    <div id="selectButton"></div>
+    <div>選択した食材</div>
+    <ul id="selectedIngredients"></ul>
+    <button id="submit-button">送信</button>
     <script src="/script.js"></script>
   </body>
 </html>

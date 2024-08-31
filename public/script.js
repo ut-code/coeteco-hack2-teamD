@@ -1,51 +1,11 @@
 const chatMessagesElement = document.getElementById("chat-messages");
-const chatMessageTemplateElement = document.getElementById("chat-message-template");
-const inputFormElement = document.getElementById("input-form");
-const promptTextInputElement = document.getElementById("prompt-text-input");
-
 const menu1Element = document.getElementById("menu1");
 const menu2Element = document.getElementById("menu2");
 const menu3Element = document.getElementById("menu3");
-
-inputFormElement.onsubmit = async (event) => {
-  // フォームが送信されたときのページ遷移を防ぐ
-  event.preventDefault();
-
-  const promptText =
-    promptTextInputElement.value.trim() +
-    "を用いた主菜を含む一食の献立を3つ提案してください。ただし、献立の始めには###を、終わりには---をつけて、わかりやすく表示してください。また、材料やレシピは表示せず、料理名のみ出力してください。";
-  if (promptText === "") return;
-  promptTextInputElement.value = "";
-
-  const yourChatMessage = { content: promptText };
-  addChatMessageElement("you", yourChatMessage);
-
-  // サーバーにリクエストを送信し、AIからの返答を取得
-  const aiChatMessage = await postChat({ promptText });
-
-  // 取得した返答を画面に描画
-  addChatMessageElement("ai", aiChatMessage);
-
-  // 取得した返答をstring形式で利用（例えばコンソールに出力）
-  const responseString = aiChatMessage.content;
-  console.log(responseString); // これで返答をstring形式で取得できます
-
-  // 献立を3つに分割（改行文字 "\n\n" を基準に分割する例）
-  const menuItems = responseString.match(/###([\s\S]*?)---/g).map(item => item.replace(/###|---/g, '').trim());
-
-  // 分割した献立をそれぞれ個別に保存または処理
-  const menu1 = menuItems[0];
-  const menu2 = menuItems[1];
-  const menu3 = menuItems[2];
-
-  console.log("献立 1:", menu1);
-  console.log("献立 2:", menu2);
-  console.log("献立 3:", menu3);
-
-  // 必要に応じて他の処理を追加
-  // 3つの献立をページの下部に表示
-  displayMenu(menu1, menu2, menu3);
-};
+const chatMessageTemplateElement = document.getElementById(
+  "chat-message-template"
+);
+const submitButtonElement = document.getElementById("submit-button");
 
 // メッセージを画面に描画する
 function addChatMessageElement(author, chatMessage) {
@@ -66,15 +26,13 @@ function addChatMessageElement(author, chatMessage) {
 
 // AIと対話する関数
 async function postChat(request) {
-  const response = await fetch("/chat", {
+    const response = await fetch("/chat", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(request),
   });
-
-  // レスポンスをJSONとして解析
   return await response.json();
 }
 
@@ -129,3 +87,79 @@ function formatResponse(response) {
 
   return formatted;
 }
+
+
+const createButton = document.getElementById("selectButton");
+const choiceOfIngredients = ["豚肉", "牛肉", "魚", "卵", "鶏肉"]; //選択肢の食材の配列
+
+choiceOfIngredients.forEach((ingredient) => { //choiceOfIngredientsの配列からそれぞれのボタンを作成
+  const newButton = document.createElement("button");
+  newButton.textContent = ingredient;
+  newButton.type = "button";
+  newButton.classList.add("select-btn");
+  createButton.appendChild(newButton);
+});
+
+const selectedIngredients = [];
+const showSelectedIngredients = document.getElementById("selectedIngredients");
+
+document.addEventListener('click', function(event) {
+  if (event.target.matches('.select-btn')) {
+    const ingredient = event.target.textContent;
+    if (selectedIngredients.includes(ingredient)) {
+      console.log(`${ingredient}はすでに選択されています`);
+    } else {
+      selectedIngredients.push(ingredient);
+
+      const selectedIngredientsList = document.createElement("li");
+      selectedIngredientsList.textContent = ingredient;
+
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "削除";
+      deleteButton.classList.add("delete-btn");
+      deleteButton.dataset.ingredient = ingredient; // 削除ボタンに食材情報を追加
+
+      selectedIngredientsList.appendChild(deleteButton);
+      showSelectedIngredients.appendChild(selectedIngredientsList);
+
+      console.log(ingredient);
+      console.log(selectedIngredients);
+    }
+  } else if (event.target.matches('.delete-btn')) {
+    const ingredient = event.target.dataset.ingredient;
+    const index = selectedIngredients.indexOf(ingredient);
+
+    if (index !== -1) {
+      selectedIngredients.splice(index, 1); // 配列から食材を削除
+      event.target.parentElement.remove(); // リストアイテムを削除
+    }
+
+    console.log(ingredient);
+    console.log(selectedIngredients);
+  }
+});
+
+submitButtonElement.onclick = async () => {
+    const promptText = selectedIngredients.join("と") + "を用いた主菜を含む一食の献立を3つ提案してください。ただし、献立の始めには###を、終わりには---をつけて、わかりやすく表示してください。また、材料やレシピは表示せず、料理名のみ出力してください。";
+    const aiMessageChunk = await postChat({ promptText });
+    addChatMessageElement("you", { content: promptText });
+    addChatMessageElement("ai", aiChatMessage);
+    const responseString = aiChatMessage.content;
+    console.log(responseString); // これで返答をstring形式で取得できます
+
+    // 献立を3つに分割（改行文字 "\n\n" を基準に分割する例）
+    const menuItems = responseString.match(/###([\s\S]*?)---/g).map(item => item.replace(/###|---/g, '').trim());
+
+    // 分割した献立をそれぞれ個別に保存または処理
+    const menu1 = menuItems[0];
+    const menu2 = menuItems[1];
+    const menu3 = menuItems[2];
+
+    console.log("献立 1:", menu1);
+    console.log("献立 2:", menu2);
+    console.log("献立 3:", menu3);
+
+    // 必要に応じて他の処理を追加
+    // 3つの献立をページの下部に表示
+    displayMenu(menu1, menu2, menu3);
+};
