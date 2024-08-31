@@ -45,8 +45,8 @@ function reduceIngredients(ingredientsText, syokuzai) {
 
 // 材料の配列からsyokuzaiの要素を残す関数
 function remainIngredients(ingredientsText, syokuzai) {
-  const ingredientsList = ingredientsText.split('・').map(item => item.trim());
-  const remainList = ingredientsList.filter(item => syokuzai.includes(item));
+  const IngredientsList = ingredientsText.split('・').map(item => item.trim());
+  const remainList = IngredientsList.filter(item => syokuzai.includes(item));
   return remainList.join('・');
 }
 
@@ -101,10 +101,10 @@ function formatMenu(menu) {
 
 // レシピリクエストを送信する関数
 async function sendRecipeRequest(menu) {
-  const promptText = `必ず${syokuzai}の書き方に基づいて、${menu} この献立の料理のレシピの材料のみを送信してください。ただし数量や料理名は表示しないかつ、材料は必ず・で箇条書きしてください。`;
+  const promptText = `${menu} この献立の料理のレシピの材料を送信してください。ただし数量や料理名は表示しないかつ、材料は必ず・で箇条書きしてください。食材の書き方は${syokuzai}の書き方に基づいてください。`;
 
   const aiResponse = await postChat({ promptText });
-
+  console.log(aiResponse);
   // レスポンスをページ上の指定された場所に表示
   displayRecipeResponse(aiResponse.content);
 }
