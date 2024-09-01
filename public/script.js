@@ -205,7 +205,7 @@ submitButtonElement.onclick = async () => {
 
     // チェックがついたチェックボックスの値を配列に変換
     const menuList = Array.from(menuCheckedBoxes).map(checkbox => checkbox.value);
-  
+
     // 配列をコンソールに出力
     console.log(menuList);
 
@@ -251,3 +251,18 @@ submitButtonElement.onclick = async () => {
   peopleNumberSlider.addEventListener('input', function() {
       peopleNumberDisplay.textContent = this.value + "人";
   });
+
+  async function fetchProducts() {
+    try {
+      const response = await fetch('http://localhost:3000/products');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      let data = await response.json();
+      console.log('Fetched data:', data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
+  fetchProducts();
