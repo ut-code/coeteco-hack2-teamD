@@ -8,7 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
     <link rel="stylesheet" href="./style.css" />
     <style>
-      /* CSSスタイルの追加 */
       .menu-container {
         display: flex;
         justify-content: space-around;
@@ -23,44 +22,43 @@
         border-radius: 5px;
       }
       #response-display {
-        border: 2px solid #333; /* 枠線のスタイル */
-        padding: 15px; /* 内側の余白 */
-        border-radius: 5px; /* 角を丸くする */
-        background-color: #f5f5f5; /* 背景色 */
-        margin-top: 20px; /* 上部のマージン */
-        max-width: 800px; /* 最大幅 */
-        word-wrap: break-word; /* 長い単語を折り返す */
-        white-space: pre-wrap; /* 改行を保持する */
+        border: 2px solid #333;
+        padding: 15px;
+        border-radius: 5px;
+        background-color: #f5f5f5;
+        margin-top: 20px;
+        max-width: 800px;
+        word-wrap: break-word;
+        white-space: pre-wrap;
       }
       #response-display ul {
-        list-style-type: disc; /* リストのスタイル */
-        padding-left: 20px; /* リストの左パディング */
+        list-style-type: disc;
+        padding-left: 20px;
       }
       #response-display li {
-        margin-bottom: 10px; /* リストアイテムの下マージン */
+        margin-bottom: 10px;
       }
     </style>
   </head>
   <body>
     <h1>AI チャット</h1>
-    <!-- レスポンスを表示するための要素 -->
-    <!-- 画像アップロードと認識結果表示 -->
-    <input type="file" id="image-upload-input" accept="image/*">
-    <img id="image-element" style="display:none;">
+    <input type="file" id="imageUploadInput" accept="image/*">
+    <img id="image-element" alt="Uploaded Image" style="max-width: 500px; display: block; margin-top: 20px;">
+  
     <ul id="recognized-ingredients"></ul>
 
     <div id="time-people">
-    <div id="cook-time" class="slider-container">
-      調理時間
-      <input type="range" min="10" max="100" value="10" step="10" id="cook-time-slider">
-      <div id="cook-time-display">10</div>
+      <div id="cook-time" class="slider-container">
+        調理時間
+        <input type="range" min="10" max="100" value="10" step="10" id="cook-time-slider">
+        <div id="cook-time-display">10</div>
+      </div>
+      <div id="people-number" class="slider-container">
+        人数
+        <input type="range" min="1" max="6" value="1" step="1" id="people-number-slider" class="sliderbar">
+        <div id="people-number-display">1</div>
+      </div>
     </div>
-    <div id="people-number" class="slider-container">
-      人数
-      <input type="range" min="1" max="6" value="1" step="1" id="people-number-slider" class="sliderbar">
-      <div id="people-number-display">1</div>
-    </div>
-  </div>
     <div id="more-request">
       <div>その他の要望</div>
       <input id="more-request-message" />
@@ -92,12 +90,11 @@
         </select>
       </form>      
     </div>
-    <div id="selectButton"></div>
+    <div id="selectButton">選択されたジャンル</div>
     <div>選択した食材</div>
     <ul id="selectedIngredients"></ul>
     <button id="submit-button">送信</button>
 
-    <!-- チャットボックス --> 
     <ul id="chat-messages">
         <template id="chat-message-template">
             <li class="chat-message">
@@ -109,14 +106,12 @@
             </li>
           </template>
     </ul>
-    <!-- 献立を表示するためのコンテナ -->
-<div class="menu-container">
-  <div id="menu1" class="menu-item"></div>
-  <div id="menu2" class="menu-item"></div>
-  <div id="menu3" class="menu-item"></div>
-</div>
-<!-- レシピの詳細 -->
-<div id="response-display"></div>
+    <div class="menu-container">
+      <div id="menu1" class="menu-item"></div>
+      <div id="menu2" class="menu-item"></div>
+      <div id="menu3" class="menu-item"></div>
+    </div>
+    <div id="response-display"></div>
 
     <script src="/script.js"></script>
   </body>
