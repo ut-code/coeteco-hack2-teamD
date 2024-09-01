@@ -229,24 +229,48 @@ h1 {
 }
 
 
-.menu-container {
+.menu-containers {
   display: flex;
   justify-content: space-around;
-  margin: 20px 0;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap: 20px; 
+}
+
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px; /* 各メニューの幅 */
+  border: 1px solid #ddd; /* 境界線の色 */
+  border-radius: 10px; /* 角を丸める */
+  overflow: hidden; /* 内容がはみ出さないようにする */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 軽いシャドウ */
+  background-color: #fff; /* 背景色 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /
 }
 
 .menu-item {
+  width: 100%;
   padding: 20px;
-  width: 30%;
-  background-color: #ecf0f1;
-  border-radius: 5px;
   text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  background-color: #f4f4f4; /* メニューアイテムの背景色 */
+  border-bottom: 1px solid #ddd; 
 }
 
-.menu-item:hover {
-  transform: scale(1.05);
+.menu-container:hover {
+  transform: scale(1.05); /* ホバー時に拡大 */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* ホバー時にシャドウを強調 */
+}
+
+.menu-img-item {
+  width: 100%;
+  height: auto; /* 高さは自動調整 */
+  object-fit: cover; /* 画像をコンテナに合わせる */
+  border-top: 1px solid #ddd; /* 画像の上の境界線 */
 }
 
 .chat-message {
