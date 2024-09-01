@@ -2,7 +2,6 @@ import { ChatOpenAI } from "@langchain/openai";
 import { DallEAPIWrapper } from "@langchain/openai";
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
-import { ChatOpenAI } from '@langchain/openai';
 
 const prisma = new PrismaClient();
 const chatModel = new ChatOpenAI({
@@ -11,7 +10,7 @@ const chatModel = new ChatOpenAI({
 
 const imgModel = new DallEAPIWrapper({
     n: 1, // Default
-    modelName: "dall-e-3", // Default 
+    modelName: "dall-e-3", // Default
     size: "1792x1024"
 });
 
@@ -57,10 +56,6 @@ process.on('SIGTERM', async () => {
 process.on('SIGINT', async () => {
   await prisma.$disconnect();
   process.exit(0);
-});
-
-app.listen(3000, () => {
-  console.log("Server started at http://localhost:3000");
 });
 
 app.post("/generate", async (request, response) => {
