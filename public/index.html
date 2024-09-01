@@ -26,10 +26,12 @@
         </div>
       </div>
       <div id="select-dish">
+        <p>料理のカテゴリーを選択してください</p>
+        <p class="tyuuigaki">※デフォルトでは全て選択されている状態です</p>
         <form id="menu-list">
           <input type="checkbox" name="dish" id="shusai" value="主菜" checked>
           <label for="shusai">主菜</label>
-          <input type="checkbox" name="dish" id="hukusai" value="副菜">
+          <input type="checkbox" name="dish" id="hukusai" value="副菜" checked>
           <label for="hukusai">副菜</label>
           <input type="checkbox" name="dish" id="sarada" value="サラダ" checked>
           <label for="sarada">サラダ</label>
@@ -38,9 +40,9 @@
           <label for="dropdown" class="tuika">追加の品:</label>
           <select name="tuika" id="tuika">
             <option value="0">なし</option>
-            <option value="1">１つ</option>
-            <option value="2">２つ</option>
-            <option value="3">３つ</option>
+            <option value="1">１品</option>
+            <option value="2">２品</option>
+            <option value="3">３品</option>
           </select>
         </form>      
       </div>

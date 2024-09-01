@@ -82,6 +82,15 @@ header > h1 {
   background-color: #ecf0f1;
   border-radius: 5px;
 }
+#select-dish p {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+}
+#select-dish .tyuuigaki {
+  font-size: small;
+  font-weight: lighter;
+}
 
 #select-dish label {
   margin-bottom: 10px;
