@@ -89,6 +89,7 @@ function displayRecipeResponse(response) {
   const formattedResponse = formatResponse(reducedIngredients);
 
   responseDisplayElement.innerHTML = `<div class="recipe-box">${formattedResponse}</div>`;
+  responseDisplayElement.style.display = "block"
 
   // レスポンスをそのまま表示する
   console.log("減算された材料リスト:", remainIngredientsList);
@@ -112,6 +113,10 @@ function displayMenu(menu1, menu2, menu3) {
   menu1Element.innerHTML = formatMenu(menu1);
   menu2Element.innerHTML = formatMenu(menu2);
   menu3Element.innerHTML = formatMenu(menu3);
+
+  menu1Element.style.display = "block" // menu-listを表示化
+  menu2Element.style.display = "block"
+  menu3Element.style.display = "block"
 
   // クリックイベントの追加
   menu1Element.onclick = () => sendRecipeRequest(menu1);
@@ -140,7 +145,8 @@ async function sendRecipeRequest(menu) {
 // ボタン作成のコード（省略）
 
 const createButton = document.getElementById("selectButton");
-const choiceGenre = ["肉類", "野菜・果実類", "魚類", "乾物・海藻類", "きのこ・山菜類", "卵類", "いも類", "パン類", "ごはん類", "乳製品類", "豆・豆腐・豆腐加工品類", "麺類", "その他食材"];
+const selectButton2 = document.getElementById("selectButton2")
+const choiceGenre = ["肉類", "野菜・果実類", "魚類", "乾物・海藻類", "きのこ・山菜類", "卵類", "いも類", "パン類", "ごはん類", "乳製品類", "豆・豆腐・豆腐加工品類", "麺類"];
 
 // 各ジャンルに対応する食材リストをオブジェクトで定義
 const ingredients = {
@@ -179,7 +185,7 @@ choiceGenre.forEach((genre) => {
         ingredientButton.textContent = item;
         ingredientButton.type = "button";
         ingredientButton.classList.add("select-btn");
-        createButton.appendChild(ingredientButton);
+        selectButton2.appendChild(ingredientButton);
       });
     }
   };

@@ -1,92 +1,37 @@
-/*
-#chat-messages {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .chat-message {
-    padding: 10px;
-    border: 1px solid;
-    border-radius: 5px;
-  }
-
-  .chat-message__author {
-    font-weight: bold;
-  }
-
-  .chat-message__content {
-    margin-top: 5px;
-  }
-
-  .chat-message__delete-button {
-    margin-top: 5px;
-  }
-
-  #input-form {
-    display: flex;
-    gap: 5px;
-  }
-
-  #prompt-text-input {
-    flex-grow: 1;
-  }
-  .chat-message--you {
-    border-color: #ff0000;
-  }
-  .chat-message--ai {
-    border-color: #0000ff;
-  }
-
-
-.button {
-  border:2px solid black;
-  border-radius: 2px;
-  padding: 10px 10px
+html {
+  height: 100%;
 }
-
-.button:hover{
-  border:3px solid aquamarine;
-}
-
-.button-letter {
-  font-size: 10px;
-  color: red;
-}
-
-#cook-time-slider{
-  width: 250px;
-  text-align: center;
-  overflow: hidden;
-  color: #ff0000;
-}
-
-#cook-time{
-  color: #ff0000;
-  border:2px black;
-  padding:20px 10px
-}
-
-*/
-
 body {
   font-family: 'Arial', sans-serif;
-  margin: 0;
+  margin: 3%;
   padding: 0;
   background-color: #fafafa;
   color: #333;
   line-height: 1.6;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.content {
+  flex: 1;
 }
 
-h1 {
-  text-align: center;
-  margin: 20px 0;
+
+header {
+  display: flex;
+}
+.header-logo {
+  height: 100px;
+  width: 100px;
+  border-radius: 50px;
+}
+header > h1 {
   color: #2c3e50;
+  margin-left: 3%;
 }
 
 .slider-container {
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -99,7 +44,7 @@ h1 {
 }
 
 #cook-time,
-#peopele-number {
+#people-number {
   font-size: 1.2em;
   font-weight: bold;
 }
@@ -114,15 +59,22 @@ h1 {
   padding: 10px;
   background-color: #ecf0f1;
   border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+#more-request-title {
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 #more-request input {
-  width: 100%;
+  width: 75%;
   padding: 10px;
-  margin-top: 10px;
+  margin-left: 4%;
   border: 1px solid #bdc3c7;
   border-radius: 5px;
 }
+
 
 #select-dish {
   margin: 20px 20px;
@@ -130,9 +82,17 @@ h1 {
   background-color: #ecf0f1;
   border-radius: 5px;
 }
+#select-dish p {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+}
+#select-dish .tyuuigaki {
+  font-size: small;
+  font-weight: lighter;
+}
 
 #select-dish label {
-  display: block;
   margin-bottom: 10px;
   cursor: pointer;
 }
@@ -154,6 +114,8 @@ h1 {
   background-color: #ecf0f1;
   border-radius: 5px;
   text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 #selectButton > button {
@@ -170,7 +132,17 @@ h1 {
   background-color: deepskyblue;
 }
 
-#selectButton > .select-btn {
+#selectButton2 {
+  margin: 20px 20px;
+  padding: 10px;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.select-btn {
   margin: 5px;
   padding: 10px 15px;
   background-color: #2ecc71;
@@ -180,7 +152,7 @@ h1 {
   cursor: pointer;
 }
 
-#selectButton > .select-btn:hover {
+.select-btn:hover {
   background-color: #27ae60;
 }
 
@@ -188,6 +160,13 @@ h1 {
   list-style-type: none;
   padding-left: 0;
   margin: 10px 20px;
+  margin: 20px 20px;
+  padding: 10px;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 #selectedIngredients li {
@@ -215,7 +194,7 @@ h1 {
 
 #submit-button {
   display: block;
-  width: calc(100% - 40px);
+  width: 80%;
   margin: 20px auto;
   padding: 10px;
   background-color: #3498db;
@@ -224,10 +203,20 @@ h1 {
   color: #fff;
   cursor: pointer;
   text-align: center;
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
 }
+
 
 #submit-button:hover {
   background-color: #2980b9;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #response-display {
@@ -255,7 +244,7 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 300px; /* 各メニューの幅 */
+  width: 30%; /* 各メニューの幅 */
   border: 1px solid #ddd; /* 境界線の色 */
   border-radius: 10px; /* 角を丸める */
   overflow: hidden; /* 内容がはみ出さないようにする */
@@ -265,26 +254,100 @@ h1 {
 }
 
 .menu-item {
+  display: none;
   width: 100%;
   padding: 20px;
   text-align: center;
-  font-size: 1.5rem;
   font-weight: bold;
   color: #333;
   background-color: #f4f4f4; /* メニューアイテムの背景色 */
   border-bottom: 1px solid #ddd; 
 }
-
+.menu-item {
+  border: 2px solid #333;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
 .menu-container:hover {
   transform: scale(1.05); /* ホバー時に拡大 */
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* ホバー時にシャドウを強調 */
 }
 
+
+.menu-item:hover {
+  transform: scale(1.05);
+}
 .menu-img-item {
   width: 100%;
   height: auto; /* 高さは自動調整 */
   object-fit: cover; /* 画像をコンテナに合わせる */
   border-top: 1px solid #ddd; /* 画像の上の境界線 */
+}
+
+#menu-list {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-top: 6px;
+}
+#menu-list > label {
+  font-size: 16px;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] + label {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 20px;
+  font: 14px/20px 'Open Sans', Arial, sans-serif;
+  color: #ddd;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+input[type="checkbox"] + label:last-child {
+  margin-bottom: 0;
+}
+
+input[type="checkbox"] + label:before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #6cc0e5;
+  position: absolute;
+  left: 0;
+  top: 0;
+  
+  -webkit-transition: all .12s, border-color .08s;
+  transition: all .12s, border-color .08s;
+}
+
+input[type="checkbox"]:checked + label:before {
+  width: 20px;
+  height: 20px;
+  top: 0;
+  left: 0;
+  border-radius: 0;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+input[type="checkbox"]:checked + label {
+  font-weight: bold;
+  color: #000; /* チェックされているラベルの色 */
+}
+
+.tuika {
+  font-weight: bold;
 }
 
 .chat-message {
@@ -320,14 +383,43 @@ h1 {
 
 #cook-time-display, #people-number-display {
   font-size: 1.2em;
-  font-weight: bold;
+  font-weight: lighter;
   margin-top: 10px;
-  color: red;
+  color: gray;
 }
 
 #time-people {
   display: flex;
   justify-content: center; /* Center the entire section horizontally */
-  gap: 40px; /* Add space between the cook time and people number sections */
+  
   margin: 20px 0; /* Add space above and below the section */
+}
+.menu-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+
+#response-display {
+  border: 2px solid #333; /* 枠線のスタイル */
+  padding: 15px; /* 内側の余白 */
+  border-radius: 5px; /* 角を丸くする */
+  background-color: #f5f5f5; /* 背景色 */
+  margin-top: 20px; /* 上部のマージン */
+  max-width: 800px; /* 最大幅 */
+  word-wrap: break-word; /* 長い単語を折り返す */
+  white-space: pre-wrap; /* 改行を保持する */
+  display: none;
+}
+#response-display ul {
+  list-style-type: disc; /* リストのスタイル */
+  padding-left: 20px; /* リストの左パディング */
+}
+#response-display li {
+  margin-bottom: 10px; /* リストアイテムの下マージン */
+}
+
+#bottom-content {
+  height: 50px;
 }
