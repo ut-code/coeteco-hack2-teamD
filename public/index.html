@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI チャット</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
     <link rel="stylesheet" href="./style.css" />
     <style>
       /* CSSスタイルの追加 */
@@ -42,6 +44,11 @@
   <body>
     <h1>AI チャット</h1>
     <!-- レスポンスを表示するための要素 -->
+    <!-- 画像アップロードと認識結果表示 -->
+    <input type="file" id="image-upload-input" accept="image/*">
+    <img id="image-element" style="display:none;">
+    <ul id="recognized-ingredients"></ul>
+
     <div id="time-people">
     <div id="cook-time" class="slider-container">
       調理時間

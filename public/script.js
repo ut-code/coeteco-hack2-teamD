@@ -6,6 +6,11 @@ const chatMessageTemplateElement = document.getElementById("chat-message-templat
 const submitButtonElement = document.getElementById("submit-button");
 const syokuzai = ["豚肉", "鯖", "ごはん", "味噌", "タマネギ", "人参", "じゃがいも", "砂糖", "塩","醤油","ごま油","ミカン"];
 const nedan = [300, 200, 300, 300];
+// 画像アップロードボタン
+const imageUploadInput = document.getElementById("image-upload-input");
+const imageElement = document.getElementById("image-element"); // 画像を表示する要素
+
+
 
 // メッセージを画面に描画する
 function addChatMessageElement(author, chatMessage) {
@@ -109,16 +114,28 @@ async function sendRecipeRequest(menu) {
   displayRecipeResponse(aiResponse.content);
 }
 
-// 食材認識の関数
 async function recognizeIngredients(imageElement) {
-  const model = await cocoSsd.load();
-  const predictions = await model.detect(imageElement);
+  const model = await cocoSsd.load(); // coco-ssdモデルのロード
+  const predictions = await model.detect(imageElement); // 画像から予測
 
-  const recognizedIngredients = predictions.map(prediction => prediction.class);
+  const recognizedIngredients = predictions.map(prediction => prediction.class); // 認識されたクラス（食材名）を取得
   console.log("認識された食材:", recognizedIngredients);
 
-  return recognizedIngredients;
+  return recognizedIngredients; // 認識された食材を返す
 }
+
+// 食材認識の関数
+imageUploadInput.addEventListener('change', async (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = async function(e) {
+      imageElement.src = e.target.result; // 画像を表示
+      await processImageRecognition(imageElement); // 画像を認識して処理する
+    };
+    reader.readAsDataURL(file);
+  }
+});
 
 function addIngredientsToSyokuzai(ingredients) {
   ingredients.forEach(ingredient => {
@@ -128,6 +145,49 @@ function addIngredientsToSyokuzai(ingredients) {
   });
   console.log("更新されたsyokuzai:", syokuzai);
 }
+
+// 画像認識と翻訳、追加の処理を行う関数
+async function processImageRecognition(imageElement) {
+  // 食材を認識
+  const recognizedIngredients = await recognizeIngredients(imageElement);
+
+  // 認識された食材を日本語に変換（必要に応じて）
+  const translatedIngredients = recognizedIngredients.map(ingredient => translateToJapanese(ingredient));
+
+  // 認識された食材をsyokuzai配列に追加
+  addIngredientsToSyokuzai(translatedIngredients);
+
+  // 追加した食材を表示
+  displayRecognizedIngredients(translatedIngredients);
+}
+
+// 英語の食材名を日本語に変換する簡易関数（実際の翻訳マッピングは詳細に設定する必要があります）
+function translateToJapanese(ingredient) {
+  const translationMap = {
+    "pork": "豚肉",
+    "chicken": "鶏肉",
+    "beef": "牛肉",
+    "onion": "タマネギ",
+    "carrot": "人参",
+    "potato": "じゃがいも",
+    "salmon": "サーモン",
+    "eggplant": "なす",
+    "broccoli": "ブロッコリー",
+    "cucumber": "きゅうり",
+    // 必要に応じて他の翻訳を追加
+  };
+
+  return translationMap[ingredient.toLowerCase()] || ingredient; // 翻訳が見つからない場合は元の名前を返す
+}
+
+
+
+// 認識された食材を表示する関数
+function displayRecognizedIngredients(ingredients) {
+  const recognizedIngredientsElement = document.getElementById("recognized-ingredients");
+  recognizedIngredientsElement.innerHTML = ingredients.map(ingredient => `<li>${ingredient}</li>`).join('');
+}
+
 
 
 // ボタン作成のコード（省略）
