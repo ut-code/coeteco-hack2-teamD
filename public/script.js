@@ -117,7 +117,8 @@ async function sendRecipeRequest(menu) {
 // ボタン作成のコード（省略）
 
 const createButton = document.getElementById("selectButton");
-const choiceGenre = ["肉類", "野菜・果実類", "魚類", "乾物・海藻類", "きのこ・山菜類", "卵類", "いも類", "パン類", "ごはん類", "乳製品類", "豆・豆腐・豆腐加工品類", "麺類", "その他食材"];
+const selectButton2 = document.getElementById("selectButton2")
+const choiceGenre = ["肉類", "野菜・果実類", "魚類", "乾物・海藻類", "きのこ・山菜類", "卵類", "いも類", "パン類", "ごはん類", "乳製品類", "豆・豆腐・豆腐加工品類", "麺類"];
 
 // 各ジャンルに対応する食材リストをオブジェクトで定義
 const ingredients = {
@@ -156,7 +157,7 @@ choiceGenre.forEach((genre) => {
         ingredientButton.textContent = item;
         ingredientButton.type = "button";
         ingredientButton.classList.add("select-btn");
-        createButton.appendChild(ingredientButton);
+        selectButton2.appendChild(ingredientButton);
       });
     }
   };
