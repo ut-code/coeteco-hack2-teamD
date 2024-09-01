@@ -2,6 +2,9 @@ const chatMessagesElement = document.getElementById("chat-messages");
 const menu1Element = document.getElementById("menu1");
 const menu2Element = document.getElementById("menu2");
 const menu3Element = document.getElementById("menu3");
+const menuImageElement1 = document.getElementById("menu-img1");
+const menuImageElement2 = document.getElementById("menu-img2");
+const menuImageElement3 = document.getElementById("menu-img3");
 const chatMessageTemplateElement = document.getElementById("chat-message-template");
 const submitButtonElement = document.getElementById("submit-button");
 const syokuzai = ["豚肉", "鯖", "ごはん", "味噌", "タマネギ", "人参", "じゃがいも", "砂糖", "塩","醤油","ごま油","ミカン"];
@@ -26,6 +29,7 @@ function addChatMessageElement(author, chatMessage) {
 
 // AIと対話する関数
 async function postChat(request) {
+  console.log(`postChatへの引数:${request}`)
   const response = await fetch("/chat", {
     method: "POST",
     headers: {
@@ -35,6 +39,29 @@ async function postChat(request) {
   });
   return await response.json();
 }
+
+async function generateMenuImages(menu, imgNum) {
+  console.log(`generateMenuImageへの引数:${menu}`)
+  //const prompt = `${menu}`;
+  const response = await fetch('/generate', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        key1:menu,
+        key2:imgNum 
+      }),
+  });
+  const data = await response.json();
+  console.log(`/generateからのresponse.json():${data.content}`)
+  if (data.content) {
+      document.getElementById(`menu-img${imgNum}`).src = data.content;
+  } else {
+      alert('Error generating image');
+  }
+}
+
 
 // 材料の配列からsyokuzaiの要素を減算する関数
 function reduceIngredients(ingredientsText, syokuzai) {
@@ -66,6 +93,7 @@ function displayRecipeResponse(response) {
   // レスポンスをそのまま表示する
   console.log("減算された材料リスト:", remainIngredientsList);
 }
+
 
 // レスポンスをHTMLフォーマットに変換する関数
 function formatResponse(response) {
@@ -228,9 +256,13 @@ submitButtonElement.onclick = async () => {
     console.log("献立 2:", menu2);
     console.log("献立 3:", menu3);
 
+    displayMenu(menu1, menu2, menu3);
+
+    await generateMenuImages({menu1}, 1);
+    await generateMenuImages({menu2}, 2);
+    await generateMenuImages({menu3}, 3);
     // 必要に応じて他の処理を追加
     // 3つの献立をページの下部に表示
-    displayMenu(menu1, menu2, menu3);
 };
 
 

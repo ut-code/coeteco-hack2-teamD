@@ -1,17 +1,27 @@
+import { ChatOpenAI } from "@langchain/openai";
+import { DallEAPIWrapper } from "@langchain/openai";
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import { ChatOpenAI } from '@langchain/openai';
 
-const prisma = new PrismaClient(); // PrismaClient のインスタンスを一度だけ作成
+const prisma = new PrismaClient();
 const chatModel = new ChatOpenAI({
-  model: "gpt-4o"
+    model: "gpt-4o"
+  });
+
+const imgModel = new DallEAPIWrapper({
+    n: 1, // Default
+    modelName: "dall-e-3", // Default 
+    size: "1792x1024"
 });
+
 const app = express();
 
 app.use(express.static("./public"));
 app.use(express.json());
 
 app.post("/chat", async (request, response) => {
+  console.log(`/chatへのリクエスト:${request}`)
   const promptText = request?.body?.promptText;
   if (typeof promptText !== "string") {
     response.sendStatus(400);
@@ -52,3 +62,21 @@ process.on('SIGINT', async () => {
 app.listen(3000, () => {
   console.log("Server started at http://localhost:3000");
 });
+
+app.post("/generate", async (request, response) => {
+  console.log(`/generateへのリクエスト:${request}`,request)
+  //const promptText = `${request.body.key1} ${request.body.key2}`;
+  const promptText = request?.body?.key1[`menu${request.body.key2}`];
+  console.log(`imgModelへのプロンプト${promptText}`)
+  // クライアントから送られてきたデータは無条件で信用しない
+  if (typeof promptText !== "string") {
+    response.sendStatus(400);
+    return;
+  }
+  const imageURL = await imgModel.invoke(promptText);
+  console.log("Generated Image URL:", imageURL);
+  response.json({ content: imageURL });
+});
+
+app.listen(3000);
+console.log("Server started at http://localhost:3000");
