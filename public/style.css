@@ -156,7 +156,21 @@ h1 {
   text-align: center;
 }
 
-.select-btn {
+#selectButton > button {
+  margin: 5px;
+  padding: 10px 15px;
+  background-color: skyblue;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+
+#selectButton > button:hover {
+  background-color: deepskyblue;
+}
+
+#selectButton > .select-btn {
   margin: 5px;
   padding: 10px 15px;
   background-color: #2ecc71;
@@ -166,7 +180,7 @@ h1 {
   cursor: pointer;
 }
 
-.select-btn:hover {
+#selectButton > .select-btn:hover {
   background-color: #27ae60;
 }
 
