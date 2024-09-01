@@ -33,7 +33,7 @@ header > h1 {
 }
 
 #cook-time,
-#peopele-number {
+#people-number {
   font-size: 1.2em;
   font-weight: bold;
 }
@@ -243,9 +243,9 @@ menu-item:hover {
 
 #cook-time-display, #people-number-display {
   font-size: 1.2em;
-  font-weight: bold;
+  font-weight: lighter;
   margin-top: 10px;
-  color: red;
+  color: gray;
 }
 
 #time-people {
