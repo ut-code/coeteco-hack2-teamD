@@ -122,21 +122,9 @@ function displayMenu(menu1, menu2, menu3) {
   console.log("献立の配列:", [menu1, menu2, menu3]);
 }
 
-//displayImages関数
-function displayImages(menuImage1, menuImage2, menuImage3) {
-  console.log(`image:${menuImage1}`)
-  menuImageElement1.src = formatImage(menuImage1);
-  menuImageElement2.src = formatImage(menuImage2);
-  menuImageElement3.src = formatImage(menuImage3);
-}
-
 // 献立のテキストを改行形式でフォーマットする関数
 function formatMenu(menu) {
   return menu.replace(/#/g, '<br/>#');
-}
-
-function formatImage(menuImage) {
-  return
 }
 
 // レシピリクエストを送信する関数
@@ -236,12 +224,11 @@ submitButtonElement.onclick = async () => {
 
     displayMenu(menu1, menu2, menu3);
 
-    const menuImage1 = await generateMenuImages({menu1}, 1);
-    const menuImage2 = await generateMenuImages({menu2}, 2);
-    const menuImage3 = await generateMenuImages({menu3}, 3);
+    await generateMenuImages({menu1}, 1);
+    await generateMenuImages({menu2}, 2);
+    await generateMenuImages({menu3}, 3);
     // 必要に応じて他の処理を追加
     // 3つの献立をページの下部に表示
-    //displayImages(menuImage1, menuImage2, menuImage3);
 };
 
 
