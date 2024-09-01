@@ -351,7 +351,7 @@ input[type="checkbox"]:checked + label {
 }
 
 .chat-message {
-  display: flex;
+  display: none;
   justify-content: space-between;
   padding: 10px;
   margin: 10px 0;
