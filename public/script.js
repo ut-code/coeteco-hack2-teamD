@@ -62,6 +62,7 @@ function displayRecipeResponse(response) {
   const formattedResponse = formatResponse(reducedIngredients);
 
   responseDisplayElement.innerHTML = `<div class="recipe-box">${formattedResponse}</div>`;
+  responseDisplayElement.style.display = "block"
 
   // レスポンスをそのまま表示する
   console.log("減算された材料リスト:", remainIngredientsList);

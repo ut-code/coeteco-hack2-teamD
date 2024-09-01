@@ -276,6 +276,7 @@ menu-item:hover {
   max-width: 800px; /* 最大幅 */
   word-wrap: break-word; /* 長い単語を折り返す */
   white-space: pre-wrap; /* 改行を保持する */
+  display: none;
 }
 #response-display ul {
   list-style-type: disc; /* リストのスタイル */
