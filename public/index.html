@@ -3,116 +3,90 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI チャット</title>
+    <title>おかずプラン</title>
     <link rel="stylesheet" href="./style.css" />
-    <style>
-      /* CSSスタイルの追加 */
-      .menu-container {
-        display: flex;
-        justify-content: space-around;
-        margin-top: 20px;
-      }
-  
-      .menu-item {
-        border: 2px solid #333;
-        padding: 15px;
-        width: 30%;
-        box-sizing: border-box;
-        border-radius: 5px;
-      }
-      #response-display {
-        border: 2px solid #333; /* 枠線のスタイル */
-        padding: 15px; /* 内側の余白 */
-        border-radius: 5px; /* 角を丸くする */
-        background-color: #f5f5f5; /* 背景色 */
-        margin-top: 20px; /* 上部のマージン */
-        max-width: 800px; /* 最大幅 */
-        word-wrap: break-word; /* 長い単語を折り返す */
-        white-space: pre-wrap; /* 改行を保持する */
-      }
-      #response-display ul {
-        list-style-type: disc; /* リストのスタイル */
-        padding-left: 20px; /* リストの左パディング */
-      }
-      #response-display li {
-        margin-bottom: 10px; /* リストアイテムの下マージン */
-      }
-    </style>
   </head>
   <body>
-    <h1>AI チャット</h1>
-    <!-- レスポンスを表示するための要素 -->
-    <div id="time-people">
-    <div id="cook-time" class="slider-container">
-      調理時間
-      <input type="range" min="10" max="100" value="10" step="10" id="cook-time-slider">
-      <div id="cook-time-display">10</div>
-    </div>
-    <div id="people-number" class="slider-container">
-      人数
-      <input type="range" min="1" max="6" value="1" step="1" id="people-number-slider" class="sliderbar">
-      <div id="people-number-display">1</div>
-    </div>
-  </div>
-    <div id="more-request">
-      <div>その他の要望</div>
-      <input id="more-request-message" />
-    </div>
-    <div id="select-dish">
-      <form id="menu-list">
-        <label>
+    <header>
+      <img class="header-logo" src="./image/service-logo.webp" alt="service-logo">
+      <h1>おかずプラン</h1>
+    </header>
+    <div class="content">
+        <!-- レスポンスを表示するための要素 -->
+      <div id="time-people">
+        <div id="cook-time" class="slider-container">
+          調理時間
+          <input type="range" min="10" max="100" value="10" step="10" id="cook-time-slider">
+          <div id="cook-time-display">10</div>
+        </div>
+        <div id="people-number" class="slider-container">
+          人数
+          <input type="range" min="1" max="6" value="1" step="1" id="people-number-slider" class="sliderbar">
+          <div id="people-number-display">1</div>
+        </div>
+      </div>
+      <div id="select-dish">
+        <p>料理のカテゴリーを選択してください</p>
+        <p class="tyuuigaki">※デフォルトでは全て選択されている状態です</p>
+        <form id="menu-list">
           <input type="checkbox" name="dish" id="shusai" value="主菜" checked>
-          主菜
-        </label>
-        <label>
-          <input type="checkbox" name="dish" id="hukusai" value="副菜">
-          副菜
-        </label>
-        <label>
+          <label for="shusai">主菜</label>
+          <input type="checkbox" name="dish" id="hukusai" value="副菜" checked>
+          <label for="hukusai">副菜</label>
           <input type="checkbox" name="dish" id="sarada" value="サラダ" checked>
-          サラダ
-        </label>
-        <label>
+          <label for="sarada">サラダ</label>
           <input type="checkbox" name="dish" id="shirumono" value="汁物" checked>
-          汁物
-        </label>
-        <label for="dropdown">追加の品:</label>
-        <select name="tuika" id="tuika">
-          <option value="0">なし</option>
-          <option value="1">１つ</option>
-          <option value="2">２つ</option>
-          <option value="3">３つ</option>
-        </select>
-      </form>      
-    </div>
-    <div id="selectButton"></div>
-    <div>選択した食材</div>
-    <ul id="selectedIngredients"></ul>
-    <button id="submit-button">送信</button>
-
-    <!-- チャットボックス --> 
-    <ul id="chat-messages">
+          <label for="shirumono">汁物</label>
+          <label for="dropdown" class="tuika">追加の品:</label>
+          <select name="tuika" id="tuika">
+            <option value="0">なし</option>
+            <option value="1">１品</option>
+            <option value="2">２品</option>
+            <option value="3">３品</option>
+          </select>
+        </form>      
+      </div>
+      <div id="selectButton"><p>食材のジャンルを選択してください</p></div>
+      <div id="selectButton2"><p>食材を選択してください</p></div>
+      <ul id="selectedIngredients">選択した食材</ul>
+      <div id="more-request">
+        <div id="more-request-title">その他の要望</div>
+        <input id="more-request-message" placeholder="例：レンジで完結"/>
+      </div>
+      <!-- チャットボックス --> 
+      <ul id="chat-messages">
         <template id="chat-message-template">
-            <li class="chat-message">
-                <div class="chat-message__author">あなた</div>
-                <div class="chat-message__content"></div>
-                <button class="chat-message__delete-button" type="button">
-                  削除
-                </button>
-            </li>
-          </template>
-    </ul>
-    <!-- 献立を表示するためのコンテナ -->
-<div class="menu-container">
-  <div id="menu1" class="menu-item"></div>
-  <div id="menu2" class="menu-item"></div>
-  <div id="menu3" class="menu-item"></div>
-</div>
-
-<!-- レシピの詳細 -->
-<div id="response-display"></div>
-<div id="price-display"></div>
-
+          <li class="chat-message">
+            <div class="chat-message__author">あなた</div>
+            <div class="chat-message__content"></div>
+            <button class="chat-message__delete-button" type="button">
+              削除
+            </button>
+          </li>
+        </template>
+      </ul>
+      <!-- 献立を表示するためのコンテナ -->
+      <div class="menu-containers">
+        <div class="menu-container">
+          <div id="menu1" class="menu-item"></div>
+          <img id="menu-img1" class="menu-img-item" src="" />
+        </div>
+        <div class="menu-container">
+          <div id="menu2" class="menu-item"></div>
+          <img id="menu-img2" class="menu-img-item" src="" />
+        </div>
+        <div class="menu-container">
+          <div id="menu3" class="menu-item"></div>
+          <img id="menu-img3" class="menu-img-item" src="" />
+        </div>
+      </div>
+      <!-- レシピの詳細 -->
+      <div id="response-display"></div>
+      <div id ="bottom-content"></div>
+    </div>
+    <footer>
+      <button id="submit-button">送信</button>
+    </footer>
     <script src="/script.js"></script>
   </body>
 </html>

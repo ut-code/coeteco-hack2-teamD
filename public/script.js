@@ -2,6 +2,9 @@ const chatMessagesElement = document.getElementById("chat-messages");
 const menu1Element = document.getElementById("menu1");
 const menu2Element = document.getElementById("menu2");
 const menu3Element = document.getElementById("menu3");
+const menuImageElement1 = document.getElementById("menu-img1");
+const menuImageElement2 = document.getElementById("menu-img2");
+const menuImageElement3 = document.getElementById("menu-img3");
 const chatMessageTemplateElement = document.getElementById("chat-message-template");
 const submitButtonElement = document.getElementById("submit-button");
 const syokuzai = ["ピーマン", '塩', '豆苗', '長なす', 'じゃがいも(メークイン）', '玉ねぎ(アーリーレッド)', '大根', 'ごぼう', 'インゲン', 'にんじん', '長芋', '大根', '枝豆', 'スナップエンドウ', 'ズッキーニ', 'ゴーヤ', 'とうもろこし', 'きぬさや', '大和芋', 'さつまいも(紅はるか)', '舞茸', 'えのき茸', 'なめこ', 'エリンギ', 'ブラウンマッシュルーム', 'ホワイトマッシュルーム', '肉厚生しいたけ', '生しいたけ', '霜降りひらたけ', '生きくらげ', '長ねぎ2本・1束', '長ねぎ', 'にら', 'にんにくの芽', 'ししとう', 'しょうが', 'にんにく', '大葉(しそ)', 'みょうが', 'きざみ小ねぎ', 'きざみ長ねぎ', 'パセリ', '糸みつば', '小ねぎ'];
@@ -29,6 +32,7 @@ function addChatMessageElement(author, chatMessage) {
 
 // AIと対話する関数
 async function postChat(request) {
+  console.log(`postChatへの引数:${request}`)
   const response = await fetch("/chat", {
     method: "POST",
     headers: {
@@ -38,6 +42,29 @@ async function postChat(request) {
   });
   return await response.json();
 }
+
+async function generateMenuImages(menu, imgNum) {
+  console.log(`generateMenuImageへの引数:${menu}`)
+  //const prompt = `${menu}`;
+  const response = await fetch('/generate', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        key1:menu,
+        key2:imgNum 
+      }),
+  });
+  const data = await response.json();
+  console.log(`/generateからのresponse.json():${data.content}`)
+  if (data.content) {
+      document.getElementById(`menu-img${imgNum}`).src = data.content;
+  } else {
+      alert('Error generating image');
+  }
+}
+
 
 // 材料の配列からsyokuzaiの要素を減算する関数
 function reduceIngredients(ingredientsText, syokuzai) {
@@ -120,15 +147,16 @@ function displayRecipeResponse(response) {
   // 残りの材料の詳細リストを生成
   const detailedIngredientsList = getDetailedIngredients(remainIngredientsList);
 
+
   // detailedListに含まれる内容だけを表示
   responseDisplayElement.innerHTML = `
     <div class="recipe-box">${detailedIngredientsList}</div>
   `;
 
+
   // レスポンスをそのまま表示する
   console.log("詳細な材料リスト:", detailedIngredientsList);
 }
-
 
 
 // レスポンスをHTMLフォーマットに変換する関数
@@ -150,6 +178,10 @@ function displayMenu(menu1, menu2, menu3) {
   menu2Element.innerHTML = formatMenu(menu2);
   menu3Element.innerHTML = formatMenu(menu3);
 
+  menu1Element.style.display = "block" // menu-listを表示化
+  menu2Element.style.display = "block"
+  menu3Element.style.display = "block"
+
   // クリックイベントの追加
   menu1Element.onclick = () => sendRecipeRequest(menu1);
   menu2Element.onclick = () => sendRecipeRequest(menu2);
@@ -166,7 +198,10 @@ function formatMenu(menu) {
 
 // ボタン作成のコード
 const createButton = document.getElementById("selectButton");
-const choiceGenre = ["肉類", "野菜・果実類", "魚類", "乾物・海藻類", "きのこ・山菜類", "卵類", "いも類", "パン類", "ごはん類", "乳製品類", "豆・豆腐・豆腐加工品類", "麺類", "その他食材"];
+const selectButton2 = document.getElementById("selectButton2")
+const choiceGenre = ["肉類", "野菜・果実類", "魚類", "乾物・海藻類", "きのこ・山菜類", "卵類", "いも類", "パン類", "ごはん類", "乳製品類", "豆・豆腐・豆腐加工品類", "麺類"];
+
+// 各ジャンルに対応する食材リストをオブジェクトで定義
 const ingredients = {
   "肉類": ["牛肉", "豚肉", "鶏肉", "ひき肉"],
   "野菜・果実類": ["キャベツ", "人参", "レタス", "白菜", "玉ねぎ", "長ネギ", "もやし", "トマト", "きゅうり", "なす", "ピーマン", "かぼちゃ", "大根", "レンコン", "アボカド"],
@@ -203,7 +238,7 @@ choiceGenre.forEach((genre) => {
         ingredientButton.textContent = item;
         ingredientButton.type = "button";
         ingredientButton.classList.add("select-btn");
-        createButton.appendChild(ingredientButton);
+        selectButton2.appendChild(ingredientButton);
       });
     }
   };
@@ -281,9 +316,13 @@ submitButtonElement.onclick = async () => {
   console.log("献立 2:", menu2);
   console.log("献立 3:", menu3);
 
-  // 必要に応じて他の処理を追加
-  // 3つの献立をページの下部に表示
-  displayMenu(menu1, menu2, menu3);
+    displayMenu(menu1, menu2, menu3);
+
+    await generateMenuImages({menu1}, 1);
+    await generateMenuImages({menu2}, 2);
+    await generateMenuImages({menu3}, 3);
+    // 必要に応じて他の処理を追加
+    // 3つの献立をページの下部に表示
 };
 
 const cookTimeSlider = document.getElementById("cook-time-slider");
@@ -304,9 +343,10 @@ peopleNumberSlider.addEventListener('input', function() {
   peopleNumberDisplay.textContent = this.value + "人";
 });
 
+
 async function fetchProducts() {
   try {
-    const response = await fetch('http://localhost:3000/products');
+    const response = await fetch('/products');
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
