@@ -85,6 +85,10 @@ function displayMenu(menu1, menu2, menu3) {
   menu2Element.innerHTML = formatMenu(menu2);
   menu3Element.innerHTML = formatMenu(menu3);
 
+  menu1Element.style.display = "block" // menu-listを表示化
+  menu2Element.style.display = "block"
+  menu3Element.style.display = "block"
+
   // クリックイベントの追加
   menu1Element.onclick = () => sendRecipeRequest(menu1);
   menu2Element.onclick = () => sendRecipeRequest(menu2);

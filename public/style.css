@@ -189,6 +189,7 @@ header > h1 {
 }
 
 .menu-item {
+  display: none;
   padding: 20px;
   width: 30%;
   background-color: #ecf0f1;
