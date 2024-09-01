@@ -3,83 +3,77 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Smart Chef</title>
+    <title>おかずプラン</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <header>
-      <img class="header-logo" src="./image/smartChefimage.jpg" alt="SmartChef Logo">
-      <h1>SmartChef</h1>
+      <img class="header-logo" src="./image/service-logo.webp" alt="service-logo">
+      <h1>おかずプラン</h1>
     </header>
-    
-    <!-- レスポンスを表示するための要素 -->
-    <div id="time-people">
-      <div id="cook-time" class="slider-container">
-        調理時間
-        <input type="range" min="10" max="100" value="10" step="10" id="cook-time-slider">
-        <div id="cook-time-display">10</div>
+    <div class="content">
+        <!-- レスポンスを表示するための要素 -->
+      <div id="time-people">
+        <div id="cook-time" class="slider-container">
+          調理時間
+          <input type="range" min="10" max="100" value="10" step="10" id="cook-time-slider">
+          <div id="cook-time-display">10</div>
+        </div>
+        <div id="people-number" class="slider-container">
+          人数
+          <input type="range" min="1" max="6" value="1" step="1" id="people-number-slider" class="sliderbar">
+          <div id="people-number-display">1</div>
+        </div>
       </div>
-      <div id="people-number" class="slider-container">
-        人数
-        <input type="range" min="1" max="6" value="1" step="1" id="people-number-slider" class="sliderbar">
-        <div id="people-number-display">1</div>
-      </div>
-    </div>
-    <div id="select-dish">
-      <form id="menu-list">
-        <label>
+      <div id="select-dish">
+        <form id="menu-list">
           <input type="checkbox" name="dish" id="shusai" value="主菜" checked>
-          主菜
-        </label>
-        <label>
+          <label for="shusai">主菜</label>
           <input type="checkbox" name="dish" id="hukusai" value="副菜">
-          副菜
-        </label>
-        <label>
+          <label for="hukusai">副菜</label>
           <input type="checkbox" name="dish" id="sarada" value="サラダ" checked>
-          サラダ
-        </label>
-        <label>
+          <label for="sarada">サラダ</label>
           <input type="checkbox" name="dish" id="shirumono" value="汁物" checked>
-          汁物
-        </label>
-        <label for="dropdown">追加の品:</label>
-        <select name="tuika" id="tuika">
-          <option value="0">なし</option>
-          <option value="1">１つ</option>
-          <option value="2">２つ</option>
-          <option value="3">３つ</option>
-        </select>
-      </form>      
+          <label for="shirumono">汁物</label>
+          <label for="dropdown" class="tuika">追加の品:</label>
+          <select name="tuika" id="tuika">
+            <option value="0">なし</option>
+            <option value="1">１つ</option>
+            <option value="2">２つ</option>
+            <option value="3">３つ</option>
+          </select>
+        </form>      
+      </div>
+      <div id="selectButton"><p>食材のジャンルを選択してください</p></div>
+      <div id="selectButton2"><p>食材を選択してください</p></div>
+      <ul id="selectedIngredients">選択した食材</ul>
+      <div id="more-request">
+        <div id="more-request-title">その他の要望</div>
+        <input id="more-request-message" placeholder="例：レンジで完結"/>
+      </div>
+      <!-- チャットボックス --> 
+      <ul id="chat-messages">
+        <template id="chat-message-template">
+          <li class="chat-message">
+            <div class="chat-message__author">あなた</div>
+            <div class="chat-message__content"></div>
+            <button class="chat-message__delete-button" type="button">
+              削除
+            </button>
+          </li>
+        </template>
+      </ul>
+      
+      <!-- 献立を表示するためのコンテナ -->
+      <div class="menu-container">
+        <div id="menu1" class="menu-item"></div>
+        <div id="menu2" class="menu-item"></div>
+        <div id="menu3" class="menu-item"></div>
+      </div>
+      <!-- レシピの詳細 -->
+      <div id="response-display"></div>
+      <div id="bottom-content"></div>
     </div>
-    <div id="selectButton"><p>食材のジャンルを選択してください</p></div>
-    <div id="selectButton2"><p>食材を選択してください</p></div>
-    <ul id="selectedIngredients">選択した食材</ul>
-    <div id="more-request">
-      <div id="more-request-title">その他の要望</div>
-      <input id="more-request-message" placeholder="例：レンジで完結"/>
-    </div>
-    <!-- チャットボックス --> 
-    <ul id="chat-messages">
-      <template id="chat-message-template">
-        <li class="chat-message">
-          <div class="chat-message__author">あなた</div>
-          <div class="chat-message__content"></div>
-          <button class="chat-message__delete-button" type="button">
-            削除
-          </button>
-        </li>
-      </template>
-    </ul>
-    
-    <!-- 献立を表示するためのコンテナ -->
-    <div class="menu-container">
-      <div id="menu1" class="menu-item"></div>
-      <div id="menu2" class="menu-item"></div>
-      <div id="menu3" class="menu-item"></div>
-    </div>
-    <!-- レシピの詳細 -->
-    <div id="response-display"></div>
     <footer>
       <button id="submit-button">送信</button>
     </footer>

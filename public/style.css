@@ -8,8 +8,14 @@ body {
   background-color: #fafafa;
   color: #333;
   line-height: 1.6;
-  height: 100%
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
+.content {
+  flex: 1;
+}
+
 
 header {
   display: flex;
@@ -25,6 +31,7 @@ header > h1 {
 }
 
 .slider-container {
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -178,7 +185,7 @@ header > h1 {
 
 #submit-button {
   display: block;
-  width: calc(100% - 40px);
+  width: 80%;
   margin: 20px auto;
   padding: 10px;
   background-color: #3498db;
@@ -189,11 +196,18 @@ header > h1 {
   text-align: center;
   position: fixed;
   bottom: 0;
+  z-index: 1000;
 }
 
 
 #submit-button:hover {
   background-color: #2980b9;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #response-display {
@@ -229,11 +243,70 @@ header > h1 {
 menu-item:hover {
   transform: scale(1.05);
 }
-#menu-list > label{
+
+#menu-list {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-top: 6px;
+}
+#menu-list > label {
   font-size: 16px;
 }
-#menu-list > label.input:checked{
-  font-size: 16px;
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] + label {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 20px;
+  font: 14px/20px 'Open Sans', Arial, sans-serif;
+  color: #ddd;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+input[type="checkbox"] + label:last-child {
+  margin-bottom: 0;
+}
+
+input[type="checkbox"] + label:before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #6cc0e5;
+  position: absolute;
+  left: 0;
+  top: 0;
+  
+  -webkit-transition: all .12s, border-color .08s;
+  transition: all .12s, border-color .08s;
+}
+
+input[type="checkbox"]:checked + label:before {
+  width: 20px;
+  height: 20px;
+  top: 0;
+  left: 0;
+  border-radius: 0;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+input[type="checkbox"]:checked + label {
+  font-weight: bold;
+  color: #000; /* チェックされているラベルの色 */
+}
+
+.tuika {
   font-weight: bold;
 }
 
@@ -278,7 +351,7 @@ menu-item:hover {
 #time-people {
   display: flex;
   justify-content: center; /* Center the entire section horizontally */
-  gap: 40px; /* Add space between the cook time and people number sections */
+  
   margin: 20px 0; /* Add space above and below the section */
 }
 .menu-container {
@@ -313,3 +386,6 @@ menu-item:hover {
   margin-bottom: 10px; /* リストアイテムの下マージン */
 }
 
+#bottom-content {
+  height: 50px;
+}
